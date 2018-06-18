@@ -10,8 +10,8 @@ import java.util.Map;
 public class main {
 
     public static void main(String[] args) throws IOException {
-        Document doc = Jsoup.connect("https://www.reddit.com/r/steamdeals/").get();
-        Elements steamUrls = doc.select("a[href*=store.steampowered.com/app][class*='s1yomx28-0']");
+        Document doc = Jsoup.connect("https://www.reddit.com/r/GameDeals/").get();
+        Elements steamUrls = doc.select("a[href*=store.steampowered.com/app][class*=' ']");
 
         Map<String, String> steamCookies = new HashMap<String, String>();
         steamCookies.put("birthtime", "915177601");
