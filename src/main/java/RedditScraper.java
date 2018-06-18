@@ -6,15 +6,12 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.util.HashSet;
 
-
-
 public class RedditScraper {
     private HashSet<String> subRedditUrls;
 
     public RedditScraper(HashSet<String> subredditUrls) {
         this.subRedditUrls = subredditUrls;
     }
-
 
     public HashSet<String> getSteamUrls() throws IOException {
         HashSet<String> listOfSteamUrls = new HashSet<String>();
@@ -29,9 +26,7 @@ public class RedditScraper {
                 String gameUrl = url.attr("href");
                 listOfSteamUrls.add(gameUrl);
             }
-
         }
         return listOfSteamUrls;
     }
-
 }
