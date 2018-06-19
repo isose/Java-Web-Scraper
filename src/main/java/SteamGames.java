@@ -7,5 +7,13 @@ public class SteamGames {
         steamGames = new ArrayList<SteamGame>();
     }
 
+    public void addGame(SteamGame steamGame) {
+        steamGames.add(steamGame);
+    }
+
+    public ArrayList<SteamGame> getSteamGames() {
+        return steamGames;
+    }
+
     //TODO
 }
