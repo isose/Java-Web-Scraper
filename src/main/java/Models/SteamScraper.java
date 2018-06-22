@@ -1,3 +1,5 @@
+package Models;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -13,7 +15,7 @@ public class SteamScraper {
     private SteamGames steamGames;
 
     public SteamScraper(HashSet<String> listOfSteamUrls) {
-        steamCookies = new HashMap<String, String>();
+        steamCookies = new HashMap<>();
         steamCookies.put("birthtime", "915177601");
         steamCookies.put("mature_content", "1");
         this.listOfSteamUrls = listOfSteamUrls;
@@ -30,7 +32,8 @@ public class SteamScraper {
         String name = scrapeName(doc);
         String description = scrapeDescription(doc);
         String rating = scrapeRating(doc);
-        String price = scrapePrice(doc);
+        //String price = scrapePrice(doc);
+        String price = "Error";
         String discount = scrapeDiscount(doc);
         String imageUrl = scrapeImageUrl(doc);
         steamGames.addGame(new SteamGame(steamUrl, name, description, rating, price, discount, imageUrl));

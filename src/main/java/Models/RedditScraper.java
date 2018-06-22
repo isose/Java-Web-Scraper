@@ -1,3 +1,5 @@
+package Models;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -14,7 +16,7 @@ public class RedditScraper {
     }
 
     public HashSet<String> getSteamUrls() throws IOException {
-        HashSet<String> listOfSteamUrls = new HashSet<String>();
+        HashSet<String> listOfSteamUrls = new HashSet<>();
         for(String subReddit : subRedditUrls) {
             
             //Go to the subreddit page and select all steam pages on that subreddit

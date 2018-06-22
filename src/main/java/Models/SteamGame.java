@@ -1,3 +1,5 @@
+package Models;
+
 public class SteamGame {
     private String url;
     private String name;
@@ -44,4 +46,11 @@ public class SteamGame {
     public String getImageUrl() {
         return imageUrl;
     }
+
+    @Override
+    public String toString() {
+        return "Name: " + name + "\n";
+    }
+
+
 }

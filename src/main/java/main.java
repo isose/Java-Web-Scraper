@@ -1,29 +1,38 @@
-import org.jsoup.Connection;
+import Controllers.ScraperController;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
-public class main {
+import javafx.application.Application;
 
-    public static void main(String[] args) throws IOException {
-        Document doc = Jsoup.connect("https://www.reddit.com/r/GameDeals/").get();
-        Elements steamUrls = doc.select("a[href*=store.steampowered.com/app][class*=' ']");
+public class main extends Application{
 
-        Map<String, String> steamCookies = new HashMap<String, String>();
-        steamCookies.put("birthtime", "915177601");
-        steamCookies.put("mature_content", "1");
+    public void start(Stage primaryStage) throws Exception {
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("main.fxml")));
+        primaryStage.setTitle("Hello World");
+        Scene testScene = new Scene(root, 600, 400);
+        testScene.getStylesheets().add("application.css");
 
-        for (Element url : steamUrls) {
-            String gameUrl = url.attr("href");
-            if(isGameFree(gameUrl, steamCookies)) {
-                printDescription(gameUrl, steamCookies);
-                System.out.println("Link: " + gameUrl + "\n");
-            }
-        }
+        primaryStage.setScene(testScene);
+        primaryStage.show();
+
+
+        ScraperController Controller = new ScraperController();
+
+
+    }
+
+
+    public static void main(String[] args) {
+        launch(args);
     }
 
     private static boolean isGameFree(String gameUrl, Map<String, String> cookies) throws IOException {
@@ -41,6 +50,7 @@ public class main {
 
 
     }
+
 
 }
 

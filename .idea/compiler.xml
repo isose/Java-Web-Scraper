@@ -10,8 +10,5 @@
         <module name="web-scraper" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="web-scraper" target="1.5" />
-    </bytecodeTargetLevel>
   </component>
 </project>
