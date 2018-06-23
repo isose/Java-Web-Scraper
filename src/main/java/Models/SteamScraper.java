@@ -24,18 +24,21 @@ public class SteamScraper {
 
     public void scrapeGames() throws IOException {
         for (String steamUrl : listOfSteamUrls)
-            scrapeGame(steamUrl);
+            steamGames.addGame(scrapeGame(getSteamDocument(steamUrl)));
     }
 
-    private void scrapeGame(String steamUrl) throws IOException {
-        Document doc = Jsoup.connect(steamUrl).cookies(steamCookies).get();
+    public SteamGame scrapeGame(Document doc) {
         String name = scrapeName(doc);
         String description = scrapeDescription(doc);
         String rating = scrapeRating(doc);
         String price = scrapePrice(doc);
         String discount = scrapeDiscount(doc);
         String imageUrl = scrapeImageUrl(doc);
-        steamGames.addGame(new SteamGame(steamUrl, name, description, rating, price, discount, imageUrl));
+        return new SteamGame(doc.location(), name, description, rating, price, discount, imageUrl);
+    }
+
+    private Document getSteamDocument(String steamUrl) throws IOException {
+        return Jsoup.connect(steamUrl).cookies(steamCookies).get();
     }
 
     private String scrapeName(Document doc) {
