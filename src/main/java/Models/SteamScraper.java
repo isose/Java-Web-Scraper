@@ -32,8 +32,7 @@ public class SteamScraper {
         String name = scrapeName(doc);
         String description = scrapeDescription(doc);
         String rating = scrapeRating(doc);
-        //String price = scrapePrice(doc);
-        String price = "Error";
+        String price = scrapePrice(doc);
         String discount = scrapeDiscount(doc);
         String imageUrl = scrapeImageUrl(doc);
         steamGames.addGame(new SteamGame(steamUrl, name, description, rating, price, discount, imageUrl));
@@ -56,7 +55,11 @@ public class SteamScraper {
 
     private String scrapePrice(Document doc) {
         Element price = doc.selectFirst(".game_purchase_price.price,.discount_final_price");
-        return price.text();
+        try {
+            return price.text();
+        } catch(NullPointerException e) {
+            return "";
+        }
     }
 
     private String scrapeDiscount(Document doc) {

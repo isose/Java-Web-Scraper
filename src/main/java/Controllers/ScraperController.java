@@ -35,8 +35,6 @@ public class ScraperController {
     @FXML
     private ListView<String> gameListView;
 
-
-
     public ScraperController() {
         subRedditUrls.add(gameDealsSub);
         subRedditUrls.add(gameFindingsSub);
@@ -55,8 +53,6 @@ public class ScraperController {
         if(steamUrls.isEmpty()) {
             System.out.println("No subreddit links to scrape....");
         }
-
-
 
         steamGameScraper = new SteamScraper(steamUrls);
 
@@ -85,8 +81,4 @@ public class ScraperController {
         Stage stage = (Stage) exitBtn.getScene().getWindow();
         stage.close();
     }
-
-
-
-
 }
