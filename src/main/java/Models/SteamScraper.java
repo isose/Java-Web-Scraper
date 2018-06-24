@@ -31,10 +31,9 @@ public class SteamScraper {
         String name = scrapeName(doc);
         String description = scrapeDescription(doc);
         String rating = scrapeRating(doc);
-        String price = scrapePrice(doc);
-        String discount = scrapeDiscount(doc);
+        String[] priceAndDiscount = scrapePriceAndDiscount(doc);
         String imageUrl = scrapeImageUrl(doc);
-        return new SteamGame(doc.location(), name, description, rating, price, discount, imageUrl);
+        return new SteamGame(doc.location(), name, description, rating, priceAndDiscount[0], priceAndDiscount[1], imageUrl);
     }
 
     private Document getSteamDocument(String steamUrl) throws IOException {
@@ -56,22 +55,15 @@ public class SteamScraper {
         return rating.text();
     }
 
-    private String scrapePrice(Document doc) {
+    private String[] scrapePriceAndDiscount(Document doc) {
+        String[] priceAndDiscount = {"", ""};
         Element price = doc.selectFirst(".game_purchase_price.price,.discount_final_price");
-        try {
-            return price.text();
-        } catch(NullPointerException e) {
-            return "";
+        priceAndDiscount[0] = price.text();
+        if (price.className().equals("discount_final_price")) {
+            Element discount = doc.selectFirst(".discount_pct");
+            priceAndDiscount[1] = discount.text();
         }
-    }
-
-    private String scrapeDiscount(Document doc) {
-        Element discount = doc.selectFirst(".discount_pct");
-        try {
-            return discount.text();
-        } catch(NullPointerException e) {
-            return "";
-        }
+        return priceAndDiscount;
     }
 
     private String scrapeImageUrl(Document doc) {
