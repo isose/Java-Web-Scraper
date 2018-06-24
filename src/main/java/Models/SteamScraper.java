@@ -56,9 +56,11 @@ public class SteamScraper {
     }
 
     private String[] scrapePriceAndDiscount(Document doc) {
-        String[] priceAndDiscount = {"", ""};
         Element price = doc.selectFirst(".game_purchase_price.price,.discount_final_price");
-        priceAndDiscount[0] = price.text();
+        if (price == null)
+            return new String[]{"", ""};
+
+        String[] priceAndDiscount = {price.text(), ""};
         if (price.className().equals("discount_final_price")) {
             Element discount = doc.selectFirst(".discount_pct");
             priceAndDiscount[1] = discount.text();
