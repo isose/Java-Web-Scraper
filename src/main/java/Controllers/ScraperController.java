@@ -8,54 +8,33 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
-import javafx.scene.text.Text;
-import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.ResourceBundle;
 
-public class ScraperController {
-
-    public Text title;
-    private String gameDealsSub = "https://www.reddit.com/r/GameDeals/";
-    private String gameFindingsSub = "https://www.reddit.com/r/steamdeals/";
-    private HashSet<String> subRedditUrls = new HashSet<>();
-
+public class ScraperController implements Initializable {
     private RedditScraper redditGameScraper;
     private SteamScraper steamGameScraper;
     private SteamGames listOfSteamGames;
 
     @FXML
-    private Button scrapeBtn;
-    @FXML
-    private Button exitBtn;
-    @FXML
     private ListView<String> gameListView;
-
-    public ScraperController() {
-        subRedditUrls.add(gameDealsSub);
-        subRedditUrls.add(gameFindingsSub);
-        redditGameScraper = new RedditScraper(subRedditUrls);
-    }
 
     public void scrape(ActionEvent event) {
         HashSet<String> steamUrls = new HashSet<>();
-
         try {
             steamUrls = redditGameScraper.getSteamUrls();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        if(steamUrls.isEmpty()) {
-            System.out.println("No subreddit links to scrape....");
-        }
-
         steamGameScraper = new SteamScraper(steamUrls);
-
         try {
             steamGameScraper.scrapeGames();
         } catch (IOException e) {
@@ -63,22 +42,20 @@ public class ScraperController {
         }
 
         listOfSteamGames = steamGameScraper.getSteamGames();
-
         ObservableList<String> gameList = FXCollections.observableArrayList();
-
         ArrayList<SteamGame> list = listOfSteamGames.getSteamGames();
-
         for(SteamGame game : list) {
             String gameName = game.getName();
-            System.out.println(gameName);
             gameList.add(gameName);
         }
-
         gameListView.setItems(gameList);
     }
 
-    public void exit(ActionEvent event) {
-        Stage stage = (Stage) exitBtn.getScene().getWindow();
-        stage.close();
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        HashSet<String> subRedditUrls = new HashSet<>();
+        subRedditUrls.add("https://www.reddit.com/r/GameDeals/");
+        subRedditUrls.add("https://www.reddit.com/r/steamdeals/");
+        redditGameScraper = new RedditScraper(subRedditUrls);
     }
 }

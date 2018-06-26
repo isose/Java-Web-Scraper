@@ -23,8 +23,10 @@ public class SteamScraper {
     }
 
     public void scrapeGames() throws IOException {
-        for (String steamUrl : listOfSteamUrls)
-            steamGames.addGame(scrapeGame(getSteamDocument(steamUrl)));
+        for (String steamUrl : listOfSteamUrls) {
+            SteamGame steamGame = scrapeGame(getSteamDocument(steamUrl));
+            steamGames.addGame(steamGame);
+        }
     }
 
     public SteamGame scrapeGame(Document doc) {
@@ -57,9 +59,10 @@ public class SteamScraper {
 
     private String[] scrapePriceAndDiscount(Document doc) {
         Element price = doc.selectFirst(".game_purchase_price.price,.discount_final_price");
-        if (price == null)
+        if (price == null) {
             return new String[]{"", ""};
-
+        }
+        //Scrapes for discount percent if game is on sale
         String[] priceAndDiscount = {price.text(), ""};
         if (price.className().equals("discount_final_price")) {
             Element discount = doc.selectFirst(".discount_pct");
