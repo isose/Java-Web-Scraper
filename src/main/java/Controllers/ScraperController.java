@@ -4,13 +4,9 @@ import Models.RedditScraper;
 import Models.SteamGame;
 import Models.SteamGames;
 import Models.SteamScraper;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
 
 import java.io.IOException;
 import java.net.URL;
@@ -21,10 +17,8 @@ import java.util.ResourceBundle;
 public class ScraperController implements Initializable {
     private RedditScraper redditGameScraper;
     private SteamScraper steamGameScraper;
-    private SteamGames listOfSteamGames;
-
     @FXML
-    private ListView<String> gameListView;
+    private GameListViewController gameListViewController;
 
     public void scrape(ActionEvent event) {
         HashSet<String> steamUrls = new HashSet<>();
@@ -41,14 +35,9 @@ public class ScraperController implements Initializable {
             e.printStackTrace();
         }
 
-        listOfSteamGames = steamGameScraper.getSteamGames();
-        ObservableList<String> gameList = FXCollections.observableArrayList();
-        ArrayList<SteamGame> list = listOfSteamGames.getSteamGames();
-        for(SteamGame game : list) {
-            String gameName = game.getName();
-            gameList.add(gameName);
-        }
-        gameListView.setItems(gameList);
+        SteamGames steamGames = steamGameScraper.getSteamGames();
+        ArrayList<SteamGame> gameList = steamGames.getSteamGames();
+        gameListViewController.setItems(gameList);
     }
 
     @Override
