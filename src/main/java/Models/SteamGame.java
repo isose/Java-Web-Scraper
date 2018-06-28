@@ -9,6 +9,10 @@ public class SteamGame {
     private String discount;
     private String imageUrl;
 
+    public SteamGame() {
+
+    }
+
     public SteamGame(String url, String name, String description, String rating, String price, String discount, String imageUrl) {
         this.url = url;
         this.name = name;
@@ -51,6 +55,4 @@ public class SteamGame {
     public String toString() {
         return "Name: " + name + "\n";
     }
-
-
 }

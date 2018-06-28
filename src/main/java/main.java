@@ -19,7 +19,7 @@ public class main extends Application{
         primaryStage.setMaximized(true);
 
         Scene scene = new Scene(root);
-        scene.getStylesheets().add("application.css");
+        scene.getStylesheets().add("mainapplication.css");
 
         primaryStage.setScene(scene);
         primaryStage.show();
