@@ -53,6 +53,6 @@ public class SteamGame {
 
     @Override
     public String toString() {
-        return "Name: " + name + "\n";
+        return "Name: " + name + "\n" + "Price: " + price + "\n" + "Discount: " + discount + "\n";
     }
 }

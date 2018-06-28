@@ -1,5 +1,8 @@
 package Controllers;
 
+import Comparators.sortByAlphabeticalOrder;
+import Comparators.sortByDiscount;
+import Comparators.sortByPrice;
 import Models.RedditScraper;
 import Models.SteamGame;
 import Models.SteamGames;
@@ -13,6 +16,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -22,18 +27,20 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class ScraperController implements Initializable {
+    public Button scrapeBtn;
     private RedditScraper redditGameScraper;
     private SteamScraper steamGameScraper;
     private SteamGames listOfSteamGames;
+    ArrayList<SteamGame> sortList = new ArrayList<>();
 
     @FXML
     private ListView<String> gameListView;
+
+    @FXML
+    public ComboBox<String> sortComboBox;
 
     @FXML
     private GamePopUpController gameController = new GamePopUpController();
@@ -55,48 +62,56 @@ public class ScraperController implements Initializable {
 
         listOfSteamGames = steamGameScraper.getSteamGames();
         ObservableList<String> gameList = FXCollections.observableArrayList();
-        ArrayList<SteamGame> list = listOfSteamGames.getSteamGames();
-        for(SteamGame game : list) {
+        sortList = listOfSteamGames.getSteamGames();
+        for(SteamGame game : sortList) {
             String gameName = game.getName();
             gameList.add(gameName);
         }
         gameListView.setItems(gameList);
 
-        gameListView.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                String gameName = gameListView.getSelectionModel().getSelectedItem();
-                SteamGame selectedGame = listOfSteamGames.getGame(gameName);
-                Stage gameStage = new Stage();
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("extraGameWindow.fxml"));
-                Parent rootTwo = null;
-                try {
-                    rootTwo = loader.load();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-                gameStage.setTitle(selectedGame.getName());
-                gameStage.setMaximized(false);
-
-                Scene scene = new Scene(rootTwo);
-                scene.getStylesheets().add("steamdata.css");
-
-                gameStage.setScene(scene);
-                gameStage.show();
-
-
-                System.out.println(selectedGame.getImageUrl());
-
-                gameController = loader.getController();
-
-                gameController.setGameImage(new ImageView(selectedGame.getImageUrl()));
-                gameController.setGameDescText(selectedGame.getDescription());
-                gameController.setGameNameText(selectedGame.getName());
-            }
-        });
 
     }
+
+    public void sortByAlphabeticalOrder() {
+        sortList.sort(new sortByAlphabeticalOrder());
+        redisplaySortedItems();
+    }
+
+    public void sortByDiscount() {
+        sortList.sort(new sortByDiscount());
+        redisplaySortedItems();
+    }
+
+    public void sortByPrice() {
+        sortList.sort(new sortByPrice());
+        redisplaySortedItems();
+    }
+
+    private void redisplaySortedItems() {
+        ObservableList<String> gameList = FXCollections.observableArrayList();
+        for(SteamGame game : sortList) {
+            String gameName = game.getName();
+            gameList.add(gameName);
+        }
+        gameListView.getItems().clear();
+        gameListView.setItems(gameList);
+    }
+
+    public void onComboChanged(ActionEvent event) {
+        String option = sortComboBox.getValue();
+        switch (option) {
+            case "Alphabetical":
+                sortByAlphabeticalOrder();
+                break;
+            case "Price":
+                sortByPrice();
+                break;
+            case "Discount":
+                sortByDiscount();
+                break;
+        }
+    }
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -104,5 +119,7 @@ public class ScraperController implements Initializable {
         subRedditUrls.add("https://www.reddit.com/r/GameDeals/");
         subRedditUrls.add("https://www.reddit.com/r/steamdeals/");
         redditGameScraper = new RedditScraper(subRedditUrls);
+        ObservableList<String> optionsList = FXCollections.observableArrayList("Alphabetical", "Price", "Discount");
+        sortComboBox.setItems(optionsList);
     }
 }
