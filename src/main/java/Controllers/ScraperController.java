@@ -37,7 +37,7 @@ public class ScraperController implements Initializable {
 
         SteamGames steamGames = steamGameScraper.getSteamGames();
         ArrayList<SteamGame> gameList = steamGames.getSteamGames();
-        gameListViewController.setItems(gameList);
+        gameListViewController.setListView(gameList);
     }
 
     @Override

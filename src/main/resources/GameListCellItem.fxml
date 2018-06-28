@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<HBox fx:id="gameHBox" maxHeight="200.0" maxWidth="1000.0" minHeight="200.0" minWidth="800.0" onMouseClicked="#openUrl" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox prefHeight="200.0" prefWidth="300.0">
+         <children>
+            <ImageView fx:id="gameImage" fitHeight="150.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" />
+            <Label fx:id="gameRating" alignment="TOP_LEFT" prefHeight="50.0" prefWidth="300.0" text="Rating" wrapText="true" />
+         </children>
+      </VBox>
+      <Region prefHeight="200.0" prefWidth="10.0" />
+      <VBox prefHeight="200.0" prefWidth="500.0">
+         <children>
+            <Label fx:id="gameTitle" prefHeight="50.0" prefWidth="500.0" text="Title" wrapText="true" />
+            <Label fx:id="gameDescription" alignment="TOP_LEFT" prefHeight="100.0" prefWidth="500.0" text="Description" wrapText="true" />
+            <HBox alignment="TOP_RIGHT" prefHeight="50.0" prefWidth="500.0">
+               <children>
+                  <Label fx:id="gameDiscount" alignment="CENTER" prefHeight="50.0" prefWidth="100.0" text="Discount">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="gamePrice" alignment="CENTER" prefHeight="100.0" prefWidth="100.0" text="Price">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</HBox>

@@ -2,16 +2,16 @@ package Models;
 
 public class SteamGame {
     private String url;
-    private String name;
+    private String title;
     private String description;
     private String rating;
     private String price;
     private String discount;
     private String imageUrl;
 
-    public SteamGame(String url, String name, String description, String rating, String price, String discount, String imageUrl) {
+    public SteamGame(String url, String title, String description, String rating, String price, String discount, String imageUrl) {
         this.url = url;
-        this.name = name;
+        this.title = title;
         this.description = description;
         this.rating = rating;
         this.price = price;
@@ -23,8 +23,8 @@ public class SteamGame {
         return url;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
     public String getDescription() {
@@ -49,8 +49,6 @@ public class SteamGame {
 
     @Override
     public String toString() {
-        return "Name: " + name + "\n";
+        return "Title: " + title + "\n";
     }
-
-
 }

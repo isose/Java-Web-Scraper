@@ -37,7 +37,7 @@ public class SteamScraperTest {
     public void testFreeGame() {
         SteamGame freeGame = steamScraper.scrapeGame(freeGameDoc);
         assertNotNull(freeGame.getUrl());
-        assertEquals("Path of Exile", freeGame.getName());
+        assertEquals("Path of Exile", freeGame.getTitle());
         assertEquals("You are an Exile, struggling to survive on the dark continent of Wraeclast, as you fight to earn power that will allow you to exact your revenge against those who wronged you. Created by hardcore gamers, Path of Exile is an online Action RPG set in a dark fantasy world.", freeGame.getDescription());
         assertEquals("- 85% of the 1,414 user reviews in the last 30 days are positive. - 92% of the 61,008 user reviews for this game are positive.", freeGame.getRating());
         assertEquals("Free to Play", freeGame.getPrice());
@@ -49,7 +49,7 @@ public class SteamScraperTest {
     public void testPaidGame() {
         SteamGame paidGame = steamScraper.scrapeGame(paidGameDoc);
         assertNotNull(paidGame.getUrl());
-        assertEquals("Tom Clancy's Rainbow Six® Siege", paidGame.getName());
+        assertEquals("Tom Clancy's Rainbow Six® Siege", paidGame.getTitle());
         assertEquals("Tom Clancy's Rainbow Six Siege is the latest installment of the acclaimed first-person shooter franchise developed by the renowned Ubisoft Montreal studio.", paidGame.getDescription());
         assertEquals("- 76% of the 7,207 user reviews in the last 30 days are positive. - 80% of the 165,243 user reviews for this game are positive.", paidGame.getRating());
         assertEquals("CDN$ 19.49", paidGame.getPrice());
@@ -61,7 +61,7 @@ public class SteamScraperTest {
     public void testDiscountGame() {
         SteamGame discountGame = steamScraper.scrapeGame(discountGameDoc);
         assertNotNull(discountGame.getUrl());
-        assertEquals("Borderlands 2", discountGame.getName());
+        assertEquals("Borderlands 2", discountGame.getTitle());
         assertEquals("The Ultimate Vault Hunter’s Upgrade lets you get the most out of the Borderlands 2 experience.", discountGame.getDescription());
         assertEquals("- 92% of the 1,735 user reviews in the last 30 days are positive. - 96% of the 82,631 user reviews for this game are positive.", discountGame.getRating());
         assertEquals("CDN$ 5.49", discountGame.getPrice());
