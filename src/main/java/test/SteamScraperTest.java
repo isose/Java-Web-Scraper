@@ -1,5 +1,6 @@
 package test;
 
+import Models.RedditScraper;
 import Models.SteamGame;
 import Models.SteamScraper;
 import org.jsoup.Jsoup;
@@ -16,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class SteamScraperTest {
     private SteamScraper steamScraper;
-    private Document freeGameDoc, paidGameDoc, discountGameDoc;
+    private Document freeGameDoc, paidGameDoc, discountGameDoc, subRedditOne, subRedditTwo;
 
     @BeforeEach
     public void setUp() {
@@ -28,10 +29,16 @@ public class SteamScraperTest {
             paidGameDoc = Jsoup.parse(input, null);
             input = new File("./src/main/java/test/testResources/Save 75% on Borderlands 2 on Steam.html");
             discountGameDoc = Jsoup.parse(input, null);
+            subRedditOne = Jsoup.connect("https://www.reddit.com/r/GameDeals/").get();
+            subRedditTwo = Jsoup.connect("https://www.reddit.com/r/steamdeals/").get();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+
+
 
     @Test
     public void testFreeGame() {

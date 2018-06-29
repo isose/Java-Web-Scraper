@@ -25,6 +25,7 @@ public class SteamScraper {
     public void scrapeGames() throws IOException {
         for (String steamUrl : listOfSteamUrls) {
             SteamGame steamGame = scrapeGame(getSteamDocument(steamUrl));
+            System.out.println(steamGame);
             steamGames.addGame(steamGame);
         }
     }
