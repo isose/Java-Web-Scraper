@@ -19,11 +19,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.text.Text;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -42,8 +37,6 @@ public class ScraperController implements Initializable {
     @FXML
     public ComboBox<String> sortComboBox;
 
-    @FXML
-    private GamePopUpController gameController = new GamePopUpController();
 
     public void scrape(ActionEvent event) {
         HashSet<String> steamUrls = new HashSet<>();
