@@ -14,20 +14,13 @@ import java.net.URISyntaxException;
 
 public class GameItem {
     private String gameUrl;
-    @FXML
-    private HBox gameHBox;
-    @FXML
-    private Label gameTitle;
-    @FXML
-    private Label gameDescription;
-    @FXML
-    private Label gameRating;
-    @FXML
-    private Label gamePrice;
-    @FXML
-    private Label gameDiscount;
-    @FXML
-    private ImageView gameImage;
+    @FXML private HBox gameHBox;
+    @FXML private Label gameTitle;
+    @FXML private Label gameDescription;
+    @FXML private Label gameRating;
+    @FXML private Label gamePrice;
+    @FXML private Label gameDiscount;
+    @FXML private ImageView gameImage;
 
     public GameItem() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("GameListCellItem.fxml"));

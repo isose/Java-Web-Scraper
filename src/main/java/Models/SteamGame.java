@@ -46,9 +46,4 @@ public class SteamGame {
     public String getImageUrl() {
         return imageUrl;
     }
-
-    @Override
-    public String toString() {
-        return "Title: " + title + "\n";
-    }
 }
