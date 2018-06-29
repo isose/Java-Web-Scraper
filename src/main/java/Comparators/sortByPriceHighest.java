@@ -4,7 +4,7 @@ import Models.SteamGame;
 
 import java.util.Comparator;
 
-public class sortByPrice implements Comparator<SteamGame> {
+public class sortByPriceHighest implements Comparator<SteamGame> {
 
     @Override
     public int compare(SteamGame o1, SteamGame o2) {
@@ -12,10 +12,10 @@ public class sortByPrice implements Comparator<SteamGame> {
         String gameTwo = o2.getPrice();
 
         if(gameOne.equals("")) {
-            return -1;
+            return 1;
         }
         else if(gameTwo.equals("")) {
-            return 1;
+            return -1;
         }
 
         float priceOne = 0;
@@ -45,15 +45,14 @@ public class sortByPrice implements Comparator<SteamGame> {
             }
         }
 
-        if(priceOne < priceTwo) {
+        if(priceOne > priceTwo) {
             return -1;
         }
-        else if(priceOne > priceTwo) {
+        else if(priceOne < priceTwo) {
             return 1;
         }
         else {
             return 0;
         }
-
     }
 }
