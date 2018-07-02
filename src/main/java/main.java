@@ -14,12 +14,12 @@ public class main extends Application{
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("main.fxml")));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/main.fxml")));
         primaryStage.setTitle("Steam Game Scraper");
         primaryStage.setMaximized(true);
 
         Scene scene = new Scene(root);
-        scene.getStylesheets().add("mainapplication.css");
+        scene.getStylesheets().add("css/main.css");
 
         primaryStage.setScene(scene);
         primaryStage.show();

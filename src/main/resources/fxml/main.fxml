@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -21,7 +22,12 @@
          <VBox.margin>
             <Insets />
          </VBox.margin></Button>
-      <ComboBox fx:id="sortComboBox" onAction="#onComboChanged" prefWidth="150.0" promptText="Sort By..." translateX="-425.0" />
+      <HBox maxWidth="1000.0">
+         <children>
+            <Region HBox.hgrow="ALWAYS" />
+            <ComboBox fx:id="sortComboBox" onAction="#onComboChanged" prefWidth="150.0" promptText="Sort By..." />
+         </children>
+      </HBox>
        <fx:include fx:id="gameListView" source="GameListView.fxml" VBox.vgrow="ALWAYS" />
       <Region maxHeight="10.0" minHeight="10.0" />
    </children>

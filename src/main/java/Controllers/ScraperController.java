@@ -27,7 +27,6 @@ public class ScraperController implements Initializable {
     @FXML
     public ComboBox<String> sortComboBox;
 
-
     public void scrape(ActionEvent event) {
         HashSet<String> steamUrls = new HashSet<>();
         try {
@@ -79,9 +78,6 @@ public class ScraperController implements Initializable {
         redisplaySortedItems();
     }
 
-
-
-
     private void redisplaySortedItems() {
         gameListViewController.clearListView();
         gameListViewController.setListView(gameList);
@@ -108,10 +104,8 @@ public class ScraperController implements Initializable {
             case "Discount (Highest)":
                 sortByDiscountHighest();
                 break;
-
         }
     }
-
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
