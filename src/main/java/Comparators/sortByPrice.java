@@ -4,7 +4,14 @@ import Models.SteamGame;
 
 import java.util.Comparator;
 
-public class sortByPriceHighest implements Comparator<SteamGame> {
+public class sortByPrice implements Comparator<SteamGame> {
+
+    public sortByPrice(boolean isHighest) {
+        this.isHighest = isHighest;
+    }
+
+    boolean isHighest;
+
 
     @Override
     public int compare(SteamGame o1, SteamGame o2) {
@@ -45,11 +52,17 @@ public class sortByPriceHighest implements Comparator<SteamGame> {
             }
         }
 
-        if(priceOne > priceTwo) {
+        if(priceOne > priceTwo && isHighest) {
             return -1;
         }
-        else if(priceOne < priceTwo) {
+        else if(priceOne < priceTwo && isHighest) {
             return 1;
+        }
+        else if(priceOne > priceTwo) {
+            return 1;
+        }
+        else if(priceOne < priceTwo) {
+            return -1;
         }
         else {
             return 0;
