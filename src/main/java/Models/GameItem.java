@@ -23,7 +23,7 @@ public class GameItem {
     @FXML private ImageView gameImage;
 
     public GameItem() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("GameListCellItem.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("fxml/GameListCellItem.fxml"));
         fxmlLoader.setController(this);
         try {
             gameHBox = fxmlLoader.load();
