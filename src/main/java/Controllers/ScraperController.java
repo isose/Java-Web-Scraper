@@ -49,32 +49,32 @@ public class ScraperController implements Initializable {
     }
 
     private void sortByAlphabeticalOrderAZ() {
-        gameList.sort(new sortByAlphabeticalOrder(true));
+        gameList.sort(new sortGame(true, false, true));
         redisplaySortedItems();
     }
 
     private void sortByAlphabeticalOrderZA() {
-        gameList.sort(new sortByAlphabeticalOrder(false));
+        gameList.sort(new sortGame(false, false, true));
         redisplaySortedItems();
     }
 
     private void sortByDiscountLowest() {
-        gameList.sort(new sortByDiscount(false));
+        gameList.sort(new sortGame(false, true, false));
         redisplaySortedItems();
     }
 
     private void sortByDiscountHighest() {
-        gameList.sort(new sortByDiscount(true));
+        gameList.sort(new sortGame(true, true, false));
         redisplaySortedItems();
     }
 
     private void sortByPriceLowest() {
-        gameList.sort(new sortByPrice(false));
+        gameList.sort(new sortGame(false, false, false));
         redisplaySortedItems();
     }
 
     private void sortByPriceHighest() {
-        gameList.sort(new sortByPrice(true));
+        gameList.sort(new sortGame(true, false, false));
         redisplaySortedItems();
     }
 
