@@ -58,13 +58,7 @@ public class sortGame implements Comparator<SteamGame> {
         float gameOneDisc = Integer.parseInt(gameOne);
         float gameTwoDisc = Integer.parseInt(gameTwo);
 
-        if(gameOneDisc > gameTwoDisc && isDescending) {
-            return -1;
-        }
-        else if(gameOneDisc < gameTwoDisc && isDescending) {
-            return 1;
-        }
-        else return Float.compare(gameOneDisc, gameTwoDisc);
+        return getCompareFloat(gameOneDisc, gameTwoDisc);
     }
 
     private int priceCompare(SteamGame o1, SteamGame o2) {
@@ -78,42 +72,38 @@ public class sortGame implements Comparator<SteamGame> {
             return -1;
         }
 
-        float priceOne = 0;
-        float priceTwo = 0;
+        float priceOne;
+        float priceTwo;
 
-        for(int i = 0; i < gameOne.length(); i++) {
-            if(gameOne.equals("Free To Play")) {
-                break;
-            }
+        priceOne = breakFloat(gameOne);
+        priceTwo = breakFloat(gameTwo);
 
-            if(gameOne.charAt(i) == ' ') {
-                gameOne = gameOne.substring(i, gameOne.length());
-                priceOne = Float.parseFloat(gameOne);
-                break;
-            }
-        }
-
-        for(int i = 0; i < gameTwo.length(); i++) {
-            if(gameTwo.equals("Free To Play")) {
-                break;
-            }
-
-            if(gameTwo.charAt(i) == ' ') {
-                gameTwo = gameTwo.substring(i, gameTwo.length());
-                priceTwo = Float.parseFloat(gameTwo);
-                break;
-            }
-        }
-
-        if(priceOne > priceTwo && isDescending) {
-            return -1;
-        }
-        else if(priceOne < priceTwo && isDescending) {
-            return 1;
-        }
-        else return Float.compare(priceOne, priceTwo);
+        return getCompareFloat(priceOne, priceTwo);
     }
 
+    private float breakFloat(String o1) {
+        float gameFloat = 0;
+        for(int i = 0; i < o1.length(); i++) {
+            if(o1.equals("Free To Play")) {
+                break;
+            }
 
+            if(o1.charAt(i) == ' ') {
+                o1 = o1.substring(i, o1.length());
+                gameFloat = Float.parseFloat(o1);
+                return gameFloat;
+            }
+        }
+        return gameFloat;
+    }
 
+    private int getCompareFloat(float gameOneDisc, float gameTwoDisc) {
+        if(gameOneDisc > gameTwoDisc && isDescending) {
+            return -1;
+        }
+        else if(gameOneDisc < gameTwoDisc && isDescending) {
+            return 1;
+        }
+        else return Float.compare(gameOneDisc, gameTwoDisc);
+    }
 }

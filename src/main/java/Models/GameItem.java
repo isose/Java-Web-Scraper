@@ -39,8 +39,16 @@ public class GameItem {
         gameRating.setText(steamGame.getRating());
         gamePrice.setText(steamGame.getPrice());
         gameDiscount.setText(steamGame.getDiscount());
-        Image image = new Image(steamGame.getImageUrl());
-        gameImage.setImage(image);
+
+        Image image;
+        if(steamGame.getImageUrl().isEmpty()) {
+            image = new Image("not_found.jpg");
+            gameImage.setImage(image);
+        }
+        else {
+            image = new Image(steamGame.getImageUrl());
+            gameImage.setImage(image);
+        }
     }
 
     public HBox getGameHBox() {
@@ -50,9 +58,7 @@ public class GameItem {
     public void openUrl() {
         try {
             Desktop.getDesktop().browse(new URI(gameUrl));
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (URISyntaxException e) {
+        } catch (IOException | URISyntaxException e) {
             e.printStackTrace();
         }
     }

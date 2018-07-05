@@ -62,6 +62,7 @@ public class SteamScraper {
         if (price == null) {
             return new String[]{"", ""};
         }
+
         //Scrapes for discount percent if game is on sale
         String[] priceAndDiscount = {price.text(), ""};
         if (price.className().equals("discount_final_price")) {
