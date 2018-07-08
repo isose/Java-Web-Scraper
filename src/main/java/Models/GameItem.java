@@ -41,14 +41,12 @@ public class GameItem {
         gameDiscount.setText(steamGame.getDiscount());
 
         Image image;
-        if(steamGame.getImageUrl().isEmpty()) {
-            image = new Image("not_found.jpg");
-            gameImage.setImage(image);
-        }
-        else {
+        if (!steamGame.getImageUrl().isEmpty()) {
             image = new Image(steamGame.getImageUrl());
-            gameImage.setImage(image);
+        } else {
+            image = new Image("not_found.jpg");
         }
+        gameImage.setImage(image);
     }
 
     public HBox getGameHBox() {
