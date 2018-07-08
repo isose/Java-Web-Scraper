@@ -4,9 +4,9 @@ import Models.SteamGame;
 
 import java.util.Comparator;
 
-public class sortGame implements Comparator<SteamGame> {
+public class SortGame implements Comparator<SteamGame> {
 
-    public sortGame(boolean isDescending, boolean discountSort, boolean alphabeticalSort) {
+    public SortGame(boolean isDescending, boolean discountSort, boolean alphabeticalSort) {
         this.isDescending = isDescending;
         this.discountSort = discountSort;
         this.alphabeticalSort = alphabeticalSort;

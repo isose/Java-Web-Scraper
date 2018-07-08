@@ -1,10 +1,7 @@
 package test;
 
-import Comparators.sortGame;
-import Models.RedditScraper;
 import Models.SteamGame;
 import Models.SteamScraper;
-import com.sun.javadoc.SeeTag;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,51 +9,18 @@ import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class SteamScraperTest {
-    private ArrayList<SteamGame> gameList = new ArrayList<>();
     private SteamScraper steamScraper;
-    private Document freeGameDoc, paidGameDoc, discountGameDoc, subRedditOne, subRedditTwo;
-    private SteamGame cheapGame;
-    private SteamGame middleGame;
-    private SteamGame expensiveGame;
+    private Document freeGameDoc, paidGameDoc, discountGameDoc;
 
 
     @BeforeEach
     public void setUp() {
-        cheapGame = new SteamGame("placeholder.com",
-                "Cheapest Game",
-                "This game is cheap",
-                "100% of people say this game is cheap",
-                "CDN$ 0.99",
-                "-90%",
-                "testimage");
-
-        middleGame = new SteamGame("abcPlaceHold.com",
-                "Middle Game",
-                "This game isn't so expensive",
-                "90% of people say this game is fair",
-                "CDN$ 1.99",
-                "-75%",
-                "testimage2");
-
-        expensiveGame = new SteamGame("testingPaceHold.com",
-                "Expensive Game",
-                "This game is really expensive",
-                "25% of people said this game made their wallet die",
-                "CDN$ 100.99",
-                "-80%",
-                "testImage3");
-        gameList.add(cheapGame);
-        gameList.add(middleGame);
-        gameList.add(expensiveGame);
         steamScraper = new SteamScraper(new HashSet<>());
         try {
             File input = new File("./src/main/java/test/testResources/Path of Exile on Steam.html");
@@ -65,16 +29,10 @@ public class SteamScraperTest {
             paidGameDoc = Jsoup.parse(input, null);
             input = new File("./src/main/java/test/testResources/Save 75% on Borderlands 2 on Steam.html");
             discountGameDoc = Jsoup.parse(input, null);
-            subRedditOne = Jsoup.connect("https://www.reddit.com/r/GameDeals/").get();
-            subRedditTwo = Jsoup.connect("https://www.reddit.com/r/steamdeals/").get();
-
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
-
-
 
     @Test
     public void testFreeGame() {
@@ -111,77 +69,4 @@ public class SteamScraperTest {
         assertEquals("-75%", discountGame.getDiscount());
         assertEquals("https://steamcdn-a.akamaihd.net/steam/apps/49520/header.jpg?t=1527189355", discountGame.getImageUrl());
     }
-
-    @Test
-    public void priceSortCheckerLowest() {
-        Collections.shuffle(gameList);
-
-        //Price Sorting for lowest price
-        gameList.sort(new sortGame(false, false, false));
-
-        assertEquals("CDN$ 0.99", gameList.get(0).getPrice());
-        assertEquals("CDN$ 1.99", gameList.get(1).getPrice());
-        assertEquals("CDN$ 100.99", gameList.get(2).getPrice());
-    }
-
-    @Test
-    public void discountSortCheckerLowest() {
-        Collections.shuffle(gameList);
-
-        //Discount Sorting for lowest discount
-        gameList.sort(new sortGame(false, true, false));
-
-        assertEquals("-75%", gameList.get(0).getDiscount());
-        assertEquals("-80%", gameList.get(1).getDiscount());
-        assertEquals("-90%", gameList.get(2).getDiscount());
-    }
-
-    @Test
-    public void priceCheckerHigher() {
-        Collections.shuffle(gameList);
-
-        //Price Sorting for highest price
-        gameList.sort(new sortGame(true, false, false));
-
-        assertEquals("CDN$ 100.99", gameList.get(0).getPrice());
-        assertEquals("CDN$ 1.99", gameList.get(1).getPrice());
-        assertEquals("CDN$ 0.99", gameList.get(2).getPrice());
-    }
-
-    @Test
-    public void discountCheckerHigher() {
-        Collections.shuffle(gameList);
-
-        //Discount checking for highest discount
-        gameList.sort(new sortGame(true, true, false));
-
-        assertEquals("-90%", gameList.get(0).getDiscount());
-        assertEquals("-80%", gameList.get(1).getDiscount());
-        assertEquals("-75%", gameList.get(2).getDiscount());
-    }
-
-    @Test
-    public void sortByAlphabeticalAZ() {
-        Collections.shuffle(gameList);
-
-        //Alphabetical A-Z sorting
-        gameList.sort(new sortGame(true, false, true));
-
-        assertEquals("Cheapest Game", gameList.get(0).getTitle());
-        assertEquals("Expensive Game", gameList.get(1).getTitle());
-        assertEquals("Middle Game",gameList.get(2).getTitle());
-    }
-
-    @Test
-    public void sortByAlphabeticalZA() {
-        Collections.shuffle(gameList);
-
-        //Alphabetical Z-A sorting
-        gameList.sort(new sortGame(false, false, true));
-
-        assertEquals("Middle Game", gameList.get(0).getTitle());
-        assertEquals("Expensive Game", gameList.get(1).getTitle());
-        assertEquals("Cheapest Game", gameList.get(2).getTitle());
-    }
-
 }
