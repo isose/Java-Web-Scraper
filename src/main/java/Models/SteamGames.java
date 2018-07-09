@@ -14,7 +14,6 @@ public class SteamGames {
     }
 
     public ArrayList<SteamGame> getSteamGames() {
-        System.out.println(steamGames);
         return steamGames;
     }
 

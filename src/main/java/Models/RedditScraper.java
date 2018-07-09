@@ -44,7 +44,5 @@ public class RedditScraper {
                 listOfSteamUrls.add(gameUrl);
             }
         }
-
-
     }
 }
