@@ -37,8 +37,8 @@ public class GameItem {
         gameTitle.setText(steamGame.getTitle());
         gameDescription.setText(steamGame.getDescription());
         gameRating.setText(steamGame.getRating());
-        gamePrice.setText(steamGame.getPrice());
-        gameDiscount.setText(steamGame.getDiscount());
+        gamePrice.setText(steamGame.getPriceString());
+        gameDiscount.setText(steamGame.getDiscountString());
 
         Image image;
         if (!steamGame.getImageUrl().isEmpty()) {
