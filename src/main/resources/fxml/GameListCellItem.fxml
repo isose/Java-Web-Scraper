@@ -10,7 +10,7 @@
 
 <HBox fx:id="gameHBox" onMouseClicked="#openUrl" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <VBox alignment="CENTER" maxWidth="300.0">
+      <VBox alignment="TOP_CENTER" maxWidth="300.0">
          <children>
             <ImageView fx:id="gameImage" fitHeight="140.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" />
             <Label fx:id="gameRating" alignment="TOP_LEFT" text="Rating" wrapText="true" VBox.vgrow="ALWAYS" />
@@ -19,7 +19,7 @@
       <Region maxWidth="10.0" minWidth="10.0" prefHeight="200.0" />
       <VBox maxWidth="650.0" HBox.hgrow="ALWAYS">
          <children>
-            <Label fx:id="gameTitle" prefHeight="50.0" text="Title" wrapText="true" VBox.vgrow="ALWAYS">
+            <Label fx:id="gameTitle" alignment="TOP_LEFT" text="Title" wrapText="true" VBox.vgrow="ALWAYS">
                <font>
                   <Font size="24.0" />
                </font></Label>
@@ -28,7 +28,7 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <HBox alignment="CENTER_RIGHT" prefHeight="50.0" VBox.vgrow="ALWAYS">
+            <HBox alignment="BOTTOM_RIGHT" VBox.vgrow="ALWAYS">
                <children>
                   <Label fx:id="gameDiscount" alignment="CENTER" minWidth="50.0" text="Discount" HBox.hgrow="ALWAYS">
                      <HBox.margin>
