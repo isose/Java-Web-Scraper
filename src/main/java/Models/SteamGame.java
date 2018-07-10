@@ -1,5 +1,8 @@
 package Models;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class SteamGame {
     private String url;
     private String title;
@@ -35,12 +38,32 @@ public class SteamGame {
         return rating;
     }
 
-    public String getPrice() {
+    public String getPriceString() {
         return price;
     }
 
-    public String getDiscount() {
+    public float getPriceFloat() {
+        //Regular expression to extract float from string
+        Pattern pattern = Pattern.compile("[0-9]+\\.[0-9]+");
+        Matcher matcher = pattern.matcher(price);
+        if (matcher.find()) {
+            return Float.parseFloat(matcher.group());
+        }
+        return 0;
+    }
+
+    public String getDiscountString() {
         return discount;
+    }
+
+    public int getDiscountInt() {
+        //Regular expression to extract numbers from string
+        Pattern pattern = Pattern.compile("[0-9]+");
+        Matcher matcher = pattern.matcher(discount);
+        if (matcher.find()) {
+            return Integer.parseInt(matcher.group());
+        }
+        return 0;
     }
 
     public String getImageUrl() {
