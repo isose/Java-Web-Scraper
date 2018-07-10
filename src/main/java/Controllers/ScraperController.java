@@ -19,7 +19,7 @@ import java.util.*;
 public class ScraperController implements Initializable {
     private RedditScraper redditGameScraper;
     private SteamScraper steamGameScraper;
-    private ArrayList<SteamGame> gameList = new ArrayList<>();
+    private SteamGames steamGames;
 
     @FXML
     private GameListViewController gameListViewController;
@@ -42,69 +42,38 @@ public class ScraperController implements Initializable {
             e.printStackTrace();
         }
 
-        SteamGames steamGames = steamGameScraper.getSteamGames();
-        gameList = steamGames.getSteamGames();
-        gameListViewController.setListView(gameList);
-
+        steamGames = steamGameScraper.getSteamGames();
+        gameListViewController.setListView(steamGames.getSteamGames());
     }
 
-    private void sortByAlphabeticalOrderAZ() {
-        gameList.sort(new SortGame(true, false, true));
-        redisplaySortedItems();
-    }
-
-    private void sortByAlphabeticalOrderZA() {
-        gameList.sort(new SortGame(false, false, true));
-        redisplaySortedItems();
-    }
-
-    private void sortByDiscountLowest() {
-        gameList.sort(new SortGame(false, true, false));
-        redisplaySortedItems();
-    }
-
-    private void sortByDiscountHighest() {
-        gameList.sort(new SortGame(true, true, false));
-        redisplaySortedItems();
-    }
-
-    private void sortByPriceLowest() {
-        gameList.sort(new SortGame(false, false, false));
-        redisplaySortedItems();
-    }
-
-    private void sortByPriceHighest() {
-        gameList.sort(new SortGame(true, false, false));
-        redisplaySortedItems();
-    }
-
-    private void redisplaySortedItems() {
+    private void redisplayItems() {
         gameListViewController.clearListView();
-        gameListViewController.setListView(gameList);
+        gameListViewController.setListView(steamGames.getSteamGames());
     }
 
     public void onComboChanged(ActionEvent event) {
         String option = sortComboBox.getValue();
         switch (option) {
             case "Alphabetical (A-Z)":
-                sortByAlphabeticalOrderAZ();
+                steamGames.sortTitleAscending();
                 break;
             case "Price (Lowest)":
-                sortByPriceLowest();
+                steamGames.sortPriceAscending();
                 break;
             case "Discount (Lowest)":
-                sortByDiscountLowest();
+                steamGames.sortDiscountAscending();
                 break;
             case "Alphabetical (Z-A)":
-                sortByAlphabeticalOrderZA();
+                steamGames.sortTitleDescending();
                 break;
             case "Price (Highest)":
-                sortByPriceHighest();
+                steamGames.sortPriceDescending();
                 break;
             case "Discount (Highest)":
-                sortByDiscountHighest();
+                steamGames.sortDiscountDescending();
                 break;
         }
+        redisplayItems();
     }
 
     @Override
