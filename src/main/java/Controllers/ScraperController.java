@@ -1,8 +1,6 @@
 package Controllers;
 
-import Comparators.*;
 import Models.RedditScraper;
-import Models.SteamGame;
 import Models.SteamGames;
 import Models.SteamScraper;
 import javafx.collections.FXCollections;
@@ -14,7 +12,8 @@ import javafx.scene.control.ComboBox;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.*;
+import java.util.HashSet;
+import java.util.ResourceBundle;
 
 public class ScraperController implements Initializable {
     private RedditScraper redditGameScraper;
