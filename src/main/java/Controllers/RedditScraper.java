@@ -32,13 +32,13 @@ public class RedditScraper {
         return listOfSteamUrls;
     }
 
-    private Set<String> getUrlSetFromElements(Elements redditUrls) {
+    private Set<String> getUrlSetFromElements(Elements redditElements) {
         Set<String> urlSet = new HashSet<>();
         Pattern pattern = Pattern.compile(STEAM_URL_PATTERN);
         //For each element selected add it's url to the list of urls
-        for(Element url : redditUrls) {
+        for(Element element : redditElements) {
             //Extracts substring of the url containing up to the game id to avoid duplicates of the same url with different ending
-            Matcher matcher = pattern.matcher(url.attr("href"));
+            Matcher matcher = pattern.matcher(element.attr("href"));
             if (matcher.find()) {
                 urlSet.add(matcher.group());
             }
