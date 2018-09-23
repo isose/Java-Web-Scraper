@@ -50,10 +50,6 @@ public class ScraperController implements Initializable {
         displayItems();
     }
 
-    private void displayItems() {
-        gameListViewController.setListView(steamGames.getSteamGames());
-    }
-
     public void onComboChanged(ActionEvent event) {
         String option = sortComboBox.getValue();
         switch (option) {
@@ -79,6 +75,10 @@ public class ScraperController implements Initializable {
         displayItems();
     }
 
+    private void displayItems() {
+        gameListViewController.setListView(steamGames.getSteamGames());
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         HashSet<String> subRedditUrls = new HashSet<>();
@@ -92,5 +92,6 @@ public class ScraperController implements Initializable {
                                                                                     SORTING_COMBOBOX_OPTION_DISCOUNT_ASCENDING,
                                                                                     SORTING_COMBOBOX_OPTION_DISCOUNT_DESCENDING );
         sortComboBox.setItems(optionsList);
+        gameListViewController.setCellFactory();
     }
 }
