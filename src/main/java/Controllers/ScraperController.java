@@ -14,6 +14,13 @@ import java.util.HashSet;
 import java.util.ResourceBundle;
 
 public class ScraperController implements Initializable {
+    private static final String SORTING_COMBOBOX_OPTION_ALPHABETICAL_ASCENDING = "Alphabetical (A-Z)";
+    private static final String SORTING_COMBOBOX_OPTION_ALPHABETICAL_DESCENDING = "Alphabetical (Z-A)";
+    private static final String SORTING_COMBOBOX_OPTION_PRICE_ASCENDING = "Price (Lowest)";
+    private static final String SORTING_COMBOBOX_OPTION_PRICE_DESCENDING = "Price (Highest)";
+    private static final String SORTING_COMBOBOX_OPTION_DISCOUNT_ASCENDING = "Discount (Lowest)";
+    private static final String SORTING_COMBOBOX_OPTION_DISCOUNT_DESCENDING = "Discount (Highest)";
+
     private RedditScraper redditGameScraper;
     private SteamScraper steamGameScraper;
     private SteamGames steamGames;
@@ -40,10 +47,10 @@ public class ScraperController implements Initializable {
         }
 
         steamGames = steamGameScraper.getSteamGames();
-        gameListViewController.setListView(steamGames.getSteamGames());
+        displayItems();
     }
 
-    private void redisplayItems() {
+    private void displayItems() {
         gameListViewController.clearListView();
         gameListViewController.setListView(steamGames.getSteamGames());
     }
@@ -51,26 +58,26 @@ public class ScraperController implements Initializable {
     public void onComboChanged(ActionEvent event) {
         String option = sortComboBox.getValue();
         switch (option) {
-            case "Alphabetical (A-Z)":
+            case SORTING_COMBOBOX_OPTION_ALPHABETICAL_ASCENDING:
                 steamGames.sortTitleAscending();
                 break;
-            case "Price (Lowest)":
-                steamGames.sortPriceAscending();
-                break;
-            case "Discount (Lowest)":
-                steamGames.sortDiscountAscending();
-                break;
-            case "Alphabetical (Z-A)":
+            case SORTING_COMBOBOX_OPTION_ALPHABETICAL_DESCENDING:
                 steamGames.sortTitleDescending();
                 break;
-            case "Price (Highest)":
+            case SORTING_COMBOBOX_OPTION_PRICE_ASCENDING:
+                steamGames.sortPriceAscending();
+                break;
+            case SORTING_COMBOBOX_OPTION_PRICE_DESCENDING:
                 steamGames.sortPriceDescending();
                 break;
-            case "Discount (Highest)":
+            case SORTING_COMBOBOX_OPTION_DISCOUNT_ASCENDING:
+                steamGames.sortDiscountAscending();
+                break;
+            case SORTING_COMBOBOX_OPTION_DISCOUNT_DESCENDING:
                 steamGames.sortDiscountDescending();
                 break;
         }
-        redisplayItems();
+        displayItems();
     }
 
     @Override
@@ -79,12 +86,12 @@ public class ScraperController implements Initializable {
         subRedditUrls.add("https://www.reddit.com/r/GameDeals/");
         subRedditUrls.add("https://www.reddit.com/r/steamdeals/");
         redditGameScraper = new RedditScraper(subRedditUrls);
-        ObservableList<String> optionsList = FXCollections.observableArrayList("Alphabetical (A-Z)",
-                                                                                    "Alphabetical (Z-A)",
-                                                                                    "Price (Lowest)",
-                                                                                    "Price (Highest)",
-                                                                                    "Discount (Lowest)",
-                                                                                    "Discount (Highest)");
+        ObservableList<String> optionsList = FXCollections.observableArrayList(SORTING_COMBOBOX_OPTION_ALPHABETICAL_ASCENDING,
+                                                                                    SORTING_COMBOBOX_OPTION_ALPHABETICAL_DESCENDING,
+                                                                                    SORTING_COMBOBOX_OPTION_PRICE_ASCENDING,
+                                                                                    SORTING_COMBOBOX_OPTION_PRICE_DESCENDING,
+                                                                                    SORTING_COMBOBOX_OPTION_DISCOUNT_ASCENDING,
+                                                                                    SORTING_COMBOBOX_OPTION_DISCOUNT_DESCENDING );
         sortComboBox.setItems(optionsList);
     }
 }
