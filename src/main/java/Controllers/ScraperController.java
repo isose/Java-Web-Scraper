@@ -51,7 +51,6 @@ public class ScraperController implements Initializable {
     }
 
     private void displayItems() {
-        gameListViewController.clearListView();
         gameListViewController.setListView(steamGames.getSteamGames());
     }
 

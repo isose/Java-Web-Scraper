@@ -8,18 +8,15 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 
 public class SteamScraper {
-    private HashMap<String, String> steamCookies;
+    private static final Map<String, String> steamCookies = Map.of("birthtime", "915177601", "mature_content", "1");
     private HashSet<String> listOfSteamUrls;
     private SteamGames steamGames;
 
     public SteamScraper(HashSet<String> listOfSteamUrls) {
-        steamCookies = new HashMap<>();
-        steamCookies.put("birthtime", "915177601");
-        steamCookies.put("mature_content", "1");
         this.listOfSteamUrls = listOfSteamUrls;
         steamGames = new SteamGames();
     }
@@ -64,7 +61,6 @@ public class SteamScraper {
         if (price == null) {
             return new String[]{"", ""};
         }
-
         //Scrapes for discount percent if game is on sale
         String[] priceAndDiscount = {price.text(), ""};
         if (price.className().equals("discount_final_price")) {

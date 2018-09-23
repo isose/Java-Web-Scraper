@@ -19,8 +19,4 @@ public class GameListViewController {
         gameListView.setItems(observableList);
         gameListView.setCellFactory(e -> new GameListViewCell());
     }
-
-    public void clearListView() {
-        gameListView.getItems().clear();
-    }
 }
