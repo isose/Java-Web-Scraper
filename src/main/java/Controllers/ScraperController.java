@@ -92,6 +92,5 @@ public class ScraperController implements Initializable {
                                                                                     SORTING_COMBOBOX_OPTION_DISCOUNT_ASCENDING,
                                                                                     SORTING_COMBOBOX_OPTION_DISCOUNT_DESCENDING );
         sortComboBox.setItems(optionsList);
-        gameListViewController.setCellFactory();
     }
 }

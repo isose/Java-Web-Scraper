@@ -28,7 +28,7 @@
             <ComboBox fx:id="sortComboBox" onAction="#onComboChanged" prefWidth="150.0" promptText="Sort By..." />
          </children>
       </HBox>
-       <fx:include fx:id="gameListView" source="GameListView.fxml" VBox.vgrow="ALWAYS" />
+       <fx:include fx:id="gameListView" source="SteamGameListView.fxml" VBox.vgrow="ALWAYS" />
       <Region maxHeight="10.0" minHeight="10.0" />
    </children>
 </VBox>

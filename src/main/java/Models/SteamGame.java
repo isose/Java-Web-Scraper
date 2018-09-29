@@ -1,5 +1,7 @@
 package Models;
 
+import javafx.scene.image.Image;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -11,6 +13,7 @@ public class SteamGame {
     private String price;
     private String discount;
     private String imageUrl;
+    private Image image;
 
     public SteamGame(String url, String title, String description, String rating, String price, String discount, String imageUrl) {
         this.url = url;
@@ -20,6 +23,11 @@ public class SteamGame {
         this.price = price;
         this.discount = discount;
         this.imageUrl = imageUrl;
+        try {
+            this.image = new Image(imageUrl);
+        } catch (Exception e) {
+            this.image = null;
+        }
     }
 
     public String getUrl() {
@@ -68,5 +76,9 @@ public class SteamGame {
 
     public String getImageUrl() {
         return imageUrl;
+    }
+
+    public Image getImage() {
+        return image;
     }
 }

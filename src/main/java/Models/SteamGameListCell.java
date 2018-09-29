@@ -2,19 +2,18 @@ package Models;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
+import javafx.scene.control.ListCell;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
 
 import java.awt.*;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-public class GameItem {
+public class SteamGameListCell extends ListCell<SteamGame> {
     private String gameUrl;
-    @FXML private HBox gameHBox;
     @FXML private Label gameTitle;
     @FXML private Label gameDescription;
     @FXML private Label gameRating;
@@ -22,13 +21,26 @@ public class GameItem {
     @FXML private Label gameDiscount;
     @FXML private ImageView gameImage;
 
-    public GameItem() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("fxml/GameListCellItem.fxml"));
-        fxmlLoader.setController(this);
+    public SteamGameListCell() {
         try {
-            gameHBox = fxmlLoader.load();
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("fxml/SteamGameListCell.fxml"));
+        fxmlLoader.setController(this);
+        fxmlLoader.setRoot(this);
+        fxmlLoader.load();
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void updateItem(SteamGame item, boolean empty) {
+        super.updateItem(item, empty);
+        if (empty) {
+            setText(null);
+            setContentDisplay(ContentDisplay.TEXT_ONLY);
+        } else {
+            setGameInfo(item);
+            setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
         }
     }
 
@@ -39,18 +51,7 @@ public class GameItem {
         gameRating.setText(steamGame.getRating());
         gamePrice.setText(steamGame.getPriceString());
         gameDiscount.setText(steamGame.getDiscountString());
-
-        Image image;
-        if (!steamGame.getImageUrl().isEmpty()) {
-            image = new Image(steamGame.getImageUrl());
-        } else {
-            image = new Image("not_found.jpg");
-        }
-        gameImage.setImage(image);
-    }
-
-    public HBox getGameHBox() {
-        return gameHBox;
+        gameImage.setImage(steamGame.getImage());
     }
 
     public void openUrl() {
