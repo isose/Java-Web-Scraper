@@ -1,7 +1,7 @@
 package Controllers;
 
-import Models.GameListViewCell;
 import Models.SteamGame;
+import Models.SteamGameCellFactory;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
@@ -12,11 +12,12 @@ public class GameListViewController {
     @FXML
     private ListView<SteamGame> gameListView;
 
-    public void setCellFactory() {
-        gameListView.setCellFactory(e -> new GameListViewCell());
-    }
-
     public void setListView(ArrayList<SteamGame> gameList) {
         gameListView.setItems(FXCollections.observableArrayList(gameList));
+    }
+
+    @FXML
+    private void initialize() {
+        gameListView.setCellFactory(new SteamGameCellFactory());
     }
 }

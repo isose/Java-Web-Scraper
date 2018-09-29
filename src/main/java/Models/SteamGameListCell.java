@@ -3,6 +3,7 @@ package Models;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -12,7 +13,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-public class GameItem {
+public class SteamGameListCell extends ListCell<SteamGame> {
     private String gameUrl;
     @FXML private HBox gameHBox;
     @FXML private Label gameTitle;
@@ -22,13 +23,24 @@ public class GameItem {
     @FXML private Label gameDiscount;
     @FXML private ImageView gameImage;
 
-    public GameItem() {
+    public SteamGameListCell() {
+        try {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("fxml/GameListCellItem.fxml"));
         fxmlLoader.setController(this);
-        try {
-            gameHBox = fxmlLoader.load();
+        fxmlLoader.load();
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void updateItem(SteamGame item, boolean empty) {
+        super.updateItem(item, empty);
+        if (empty) {
+            setGraphic(null);
+        } else {
+            setGameInfo(item);
+            setGraphic(gameHBox);
         }
     }
 
@@ -40,17 +52,11 @@ public class GameItem {
         gamePrice.setText(steamGame.getPriceString());
         gameDiscount.setText(steamGame.getDiscountString());
 
-        Image image;
         if (!steamGame.getImageUrl().isEmpty()) {
-            image = new Image(steamGame.getImageUrl());
+            gameImage.setImage(new Image(steamGame.getImageUrl()));
         } else {
-            image = new Image("not_found.jpg");
+            gameImage.setImage(new Image("not_found.jpg"));
         }
-        gameImage.setImage(image);
-    }
-
-    public HBox getGameHBox() {
-        return gameHBox;
     }
 
     public void openUrl() {
