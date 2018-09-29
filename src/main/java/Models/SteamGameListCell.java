@@ -25,7 +25,7 @@ public class SteamGameListCell extends ListCell<SteamGame> {
 
     public SteamGameListCell() {
         try {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("fxml/GameListCellItem.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("fxml/SteamGameListCell.fxml"));
         fxmlLoader.setController(this);
         fxmlLoader.load();
         } catch (IOException e) {
