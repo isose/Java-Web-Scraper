@@ -2,11 +2,10 @@ package Models;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
 
 import java.awt.*;
 import java.io.IOException;
@@ -15,7 +14,6 @@ import java.net.URISyntaxException;
 
 public class SteamGameListCell extends ListCell<SteamGame> {
     private String gameUrl;
-    @FXML private HBox gameHBox;
     @FXML private Label gameTitle;
     @FXML private Label gameDescription;
     @FXML private Label gameRating;
@@ -27,6 +25,7 @@ public class SteamGameListCell extends ListCell<SteamGame> {
         try {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("fxml/SteamGameListCell.fxml"));
         fxmlLoader.setController(this);
+        fxmlLoader.setRoot(this);
         fxmlLoader.load();
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -37,10 +36,11 @@ public class SteamGameListCell extends ListCell<SteamGame> {
     public void updateItem(SteamGame item, boolean empty) {
         super.updateItem(item, empty);
         if (empty) {
-            setGraphic(null);
+            setText(null);
+            setContentDisplay(ContentDisplay.TEXT_ONLY);
         } else {
             setGameInfo(item);
-            setGraphic(gameHBox);
+            setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
         }
     }
 
@@ -51,12 +51,7 @@ public class SteamGameListCell extends ListCell<SteamGame> {
         gameRating.setText(steamGame.getRating());
         gamePrice.setText(steamGame.getPriceString());
         gameDiscount.setText(steamGame.getDiscountString());
-
-        if (!steamGame.getImageUrl().isEmpty()) {
-            gameImage.setImage(new Image(steamGame.getImageUrl()));
-        } else {
-            gameImage.setImage(new Image("not_found.jpg"));
-        }
+        gameImage.setImage(steamGame.getImage());
     }
 
     public void openUrl() {
