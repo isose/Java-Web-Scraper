@@ -1,7 +1,7 @@
 package test;
 
 import Models.SteamGame;
-import Controllers.SteamScraper;
+import Scrapers.SteamScraper;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.junit.jupiter.api.BeforeEach;

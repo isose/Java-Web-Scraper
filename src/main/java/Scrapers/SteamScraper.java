@@ -1,4 +1,4 @@
-package Controllers;
+package Scrapers;
 
 import Models.SteamGame;
 import Models.SteamGames;

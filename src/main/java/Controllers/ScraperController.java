@@ -1,6 +1,8 @@
 package Controllers;
 
 import Models.SteamGames;
+import Scrapers.RedditScraper;
+import Scrapers.SteamScraper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
