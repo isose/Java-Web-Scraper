@@ -15,14 +15,13 @@ public class RedditScraper {
     private static final String STEAM_URL_PATTERN = "https://store.steampowered.com/app/\\d+";
 
     private Set<String> subRedditUrls;
-    private HashSet<String> listOfSteamUrls;
 
     public RedditScraper(HashSet<String> subredditUrls) {
         this.subRedditUrls = subredditUrls;
-        listOfSteamUrls = new HashSet<>();
     }
 
     public HashSet<String> getSteamUrls() throws IOException {
+        HashSet<String> listOfSteamUrls = new HashSet<>();
         for(String subReddit : subRedditUrls) {
             //Go to the subreddit page and select all steam pages on that subreddit
             Document doc = Jsoup.connect(subReddit).get();
@@ -57,7 +56,7 @@ public class RedditScraper {
         for(Element url : redditUrls) {
             String gameUrl = url.attr("href");
             if(gameUrl.contains("https://store.steampowered.com/app/")) {
-                listOfSteamUrls.add(gameUrl);
+//                listOfSteamUrls.add(gameUrl);
             }
         }
     }
