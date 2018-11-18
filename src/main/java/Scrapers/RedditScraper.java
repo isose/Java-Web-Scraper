@@ -6,6 +6,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -13,36 +14,46 @@ import java.util.regex.Pattern;
 
 public class RedditScraper {
     private static final String STEAM_URL_PATTERN = "https://store.steampowered.com/app/\\d+";
+    private static final String[] DEFAULT_SUBREDDIT_URLS = new String[] { "https://www.reddit.com/r/gamedeals/", "https://www.reddit.com/r/steamdeals/" };
 
     private Set<String> subRedditUrls;
 
-    public RedditScraper(HashSet<String> subredditUrls) {
-        this.subRedditUrls = subredditUrls;
+    public RedditScraper() {
+        subRedditUrls = new HashSet<>(Arrays.asList(DEFAULT_SUBREDDIT_URLS));
     }
 
-    public HashSet<String> getSteamUrls() throws IOException {
+    public HashSet<String> scrapeSteamUrls() {
         HashSet<String> listOfSteamUrls = new HashSet<>();
-        for(String subReddit : subRedditUrls) {
-            //Go to the subreddit page and select all steam pages on that subreddit
-            Document doc = Jsoup.connect(subReddit).get();
-            Elements redditElements = doc.select("a[href*=store.steampowered.com/app][class*=' ']");
-            listOfSteamUrls.addAll(getUrlSetFromElements(redditElements));
-        }
+        subRedditUrls.parallelStream().forEach((subRedditUrl) -> {
+            try {
+                //Go to the subReddit page and get all the steam urls on that subReddit
+                Document doc = Jsoup.connect(subRedditUrl).get();
+                Elements redditElements = doc.select("a[href*=store.steampowered.com/app][class*=' ']");
+                listOfSteamUrls.addAll(getSteamUrlSetFromElements(redditElements));
+            } catch (IOException e) {
+                System.out.print("Jsoup could not connect to subRedditUrl");
+            }
+        });
         return listOfSteamUrls;
     }
 
-    private Set<String> getUrlSetFromElements(Elements redditElements) {
-        Set<String> urlSet = new HashSet<>();
+    /**
+     * gets set of steam urls from given elements
+     * @param elements elements to get steam url from
+     * @return set of urls
+     */
+    private Set<String> getSteamUrlSetFromElements(Elements elements) {
+        Set<String> steamUrlSet = new HashSet<>();
         Pattern pattern = Pattern.compile(STEAM_URL_PATTERN);
-        //For each element selected add it's url to the list of urls
-        for(Element element : redditElements) {
+        //For each element add it's url to the list of urls
+        for(Element element : elements) {
             //Extracts substring of the url containing up to the game id to avoid duplicates of the same url with different ending
             Matcher matcher = pattern.matcher(element.attr("href"));
             if (matcher.find()) {
-                urlSet.add(matcher.group());
+                steamUrlSet.add(matcher.group());
             }
         }
-        return urlSet;
+        return steamUrlSet;
     }
 
     /**
@@ -55,8 +66,8 @@ public class RedditScraper {
         Elements redditUrls = doc.select("td a");
         for(Element url : redditUrls) {
             String gameUrl = url.attr("href");
-            if(gameUrl.contains("https://store.steampowered.com/app/")) {
-//                listOfSteamUrls.add(gameUrl);
+            if(gameUrl.contains(STEAM_URL_PATTERN)) {
+                // listOfSteamUrls.add(gameUrl);
             }
         }
     }
