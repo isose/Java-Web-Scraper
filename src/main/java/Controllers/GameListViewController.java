@@ -10,14 +10,14 @@ import java.util.ArrayList;
 
 public class GameListViewController {
     @FXML
-    private ListView<SteamGame> gameListView;
+    private ListView<SteamGame> steamGameListView;
 
-    public void setListView(ArrayList<SteamGame> gameList) {
-        gameListView.setItems(FXCollections.observableArrayList(gameList));
+    public void setListView(ArrayList<SteamGame> steamGames) {
+        steamGameListView.setItems(FXCollections.observableArrayList(steamGames));
     }
 
     @FXML
     private void initialize() {
-        gameListView.setCellFactory(new SteamGameCellFactory());
+        steamGameListView.setCellFactory(new SteamGameCellFactory());
     }
 }
