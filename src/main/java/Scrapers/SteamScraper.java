@@ -1,11 +1,10 @@
-package Controllers;
+package Scrapers;
 
 import Models.SteamGame;
 import Models.SteamGames;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.HashSet;
@@ -21,11 +20,14 @@ public class SteamScraper {
         steamGames = new SteamGames();
     }
 
-    public void scrapeGames() throws IOException {
-        for (String steamUrl : listOfSteamUrls) {
-            SteamGame steamGame = scrapeGame(getSteamDocument(steamUrl));
-            steamGames.addGame(steamGame);
-        }
+    public void scrapeGames() {
+        listOfSteamUrls.parallelStream().forEach((steamUrl) -> {
+            try {
+                steamGames.addGame(scrapeGame(getSteamDocument(steamUrl)));
+            } catch (IOException e) {
+                System.out.print("Jsoup could not connect to steamUrl");
+            }
+        });
     }
 
     public SteamGame scrapeGame(Document doc) {
@@ -42,18 +44,15 @@ public class SteamScraper {
     }
 
     private String scrapeName(Document doc) {
-        Elements name = doc.select(".apphub_AppName");
-        return name.text();
+        return doc.select(".apphub_AppName").text();
     }
 
     private String scrapeDescription(Document doc) {
-        Elements description = doc.select(".game_description_snippet");
-        return description.text();
+        return doc.select(".game_description_snippet").text();
     }
 
     private String scrapeRating(Document doc) {
-        Elements rating = doc.select(".nonresponsive_hidden.responsive_reviewdesc");
-        return rating.text();
+        return doc.select(".nonresponsive_hidden.responsive_reviewdesc").text();
     }
 
     private String[] scrapePriceAndDiscount(Document doc) {
@@ -64,15 +63,13 @@ public class SteamScraper {
         //Scrapes for discount percent if game is on sale
         String[] priceAndDiscount = {price.text(), ""};
         if (price.className().equals("discount_final_price")) {
-            Element discount = doc.selectFirst(".discount_pct");
-            priceAndDiscount[1] = discount.text();
+            priceAndDiscount[1] = doc.selectFirst(".discount_pct").text();
         }
         return priceAndDiscount;
     }
 
     private String scrapeImageUrl(Document doc) {
-        Elements imageUrl = doc.select(".game_header_image_full");
-        return imageUrl.attr("src");
+        return doc.select(".game_header_image_full").attr("src");
     }
 
     public SteamGames getSteamGames() {

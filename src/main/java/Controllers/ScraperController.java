@@ -1,16 +1,15 @@
 package Controllers;
 
 import Models.SteamGames;
+import Scrapers.RedditScraper;
+import Scrapers.SteamScraper;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 
-import java.io.IOException;
 import java.net.URL;
-import java.util.HashSet;
 import java.util.ResourceBundle;
 
 public class ScraperController implements Initializable {
@@ -21,8 +20,8 @@ public class ScraperController implements Initializable {
     private static final String SORTING_COMBOBOX_OPTION_DISCOUNT_ASCENDING = "Discount (Lowest)";
     private static final String SORTING_COMBOBOX_OPTION_DISCOUNT_DESCENDING = "Discount (Highest)";
 
-    private RedditScraper redditGameScraper;
-    private SteamScraper steamGameScraper;
+    private static RedditScraper redditGameScraper;
+    private static SteamScraper steamGameScraper;
     private SteamGames steamGames;
 
     @FXML
@@ -31,21 +30,10 @@ public class ScraperController implements Initializable {
     @FXML
     public ComboBox<String> sortComboBox;
 
-    public void scrape(ActionEvent event) {
-        HashSet<String> steamUrls = new HashSet<>();
-        try {
-            steamUrls = redditGameScraper.getSteamUrls();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        steamGameScraper = new SteamScraper(steamUrls);
-        try {
-            steamGameScraper.scrapeGames();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+    public void scrape(ActionEvent event) throws Exception {
+        // TODO singleton pattern for SteamScraper
+        steamGameScraper = new SteamScraper(redditGameScraper.scrapeSteamUrls());
+        steamGameScraper.scrapeGames();
         steamGames = steamGameScraper.getSteamGames();
         displayItems();
     }
@@ -81,16 +69,13 @@ public class ScraperController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        HashSet<String> subRedditUrls = new HashSet<>();
-        subRedditUrls.add("https://www.reddit.com/r/GameDeals/");
-        subRedditUrls.add("https://www.reddit.com/r/steamdeals/");
-        redditGameScraper = new RedditScraper(subRedditUrls);
-        ObservableList<String> optionsList = FXCollections.observableArrayList(SORTING_COMBOBOX_OPTION_ALPHABETICAL_ASCENDING,
-                                                                                    SORTING_COMBOBOX_OPTION_ALPHABETICAL_DESCENDING,
-                                                                                    SORTING_COMBOBOX_OPTION_PRICE_ASCENDING,
-                                                                                    SORTING_COMBOBOX_OPTION_PRICE_DESCENDING,
-                                                                                    SORTING_COMBOBOX_OPTION_DISCOUNT_ASCENDING,
-                                                                                    SORTING_COMBOBOX_OPTION_DISCOUNT_DESCENDING );
-        sortComboBox.setItems(optionsList);
+        // TODO singleton pattern for RedditScraper
+        redditGameScraper = new RedditScraper();
+        sortComboBox.setItems(FXCollections.observableArrayList(SORTING_COMBOBOX_OPTION_ALPHABETICAL_ASCENDING,
+                                                                SORTING_COMBOBOX_OPTION_ALPHABETICAL_DESCENDING,
+                                                                SORTING_COMBOBOX_OPTION_PRICE_ASCENDING,
+                                                                SORTING_COMBOBOX_OPTION_PRICE_DESCENDING,
+                                                                SORTING_COMBOBOX_OPTION_DISCOUNT_ASCENDING,
+                                                                SORTING_COMBOBOX_OPTION_DISCOUNT_DESCENDING));
     }
 }

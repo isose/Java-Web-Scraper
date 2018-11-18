@@ -23,26 +23,26 @@ public class SteamGames {
     }
 
     public void sortTitleAscending() {
-        Collections.sort(steamGames, new TitleComparator());
+        steamGames.sort(new TitleComparator());
     }
 
     public void sortTitleDescending() {
-        Collections.sort(steamGames, Collections.reverseOrder(new TitleComparator()));
+        steamGames.sort(Collections.reverseOrder(new TitleComparator()));
     }
 
     public void sortPriceAscending() {
-        Collections.sort(steamGames, new PriceComparator());
+        steamGames.sort(new PriceComparator());
     }
 
     public void sortPriceDescending() {
-        Collections.sort(steamGames, Collections.reverseOrder(new PriceComparator()));
+        steamGames.sort(Collections.reverseOrder(new PriceComparator()));
     }
 
     public void sortDiscountAscending() {
-        Collections.sort(steamGames, new DiscountComparator());
+        steamGames.sort(new DiscountComparator());
     }
 
     public void sortDiscountDescending() {
-        Collections.sort(steamGames, Collections.reverseOrder(new DiscountComparator()));
+        steamGames.sort(Collections.reverseOrder(new DiscountComparator()));
     }
 }
