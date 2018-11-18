@@ -23,19 +23,16 @@ public class SteamScraperTest {
     public void setUp() {
         steamScraper = new SteamScraper(new HashSet<>());
         try {
-            File input = new File("./src/main/java/test/testResources/Path of Exile on Steam.html");
-            freeGameDoc = Jsoup.parse(input, null);
-            input = new File("./src/main/java/test/testResources/Tom Clancy's Rainbow Six® Siege on Steam.html");
-            paidGameDoc = Jsoup.parse(input, null);
-            input = new File("./src/main/java/test/testResources/Save 75% on Borderlands 2 on Steam.html");
-            discountGameDoc = Jsoup.parse(input, null);
+            freeGameDoc = Jsoup.parse(new File("./src/main/java/test/testResources/Path of Exile on Steam.html"), null);
+            paidGameDoc = Jsoup.parse(new File("./src/main/java/test/testResources/Tom Clancy's Rainbow Six® Siege on Steam.html"), null);
+            discountGameDoc = Jsoup.parse(new File("./src/main/java/test/testResources/Save 75% on Borderlands 2 on Steam.html"), null);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     @Test
-    public void testFreeGame() {
+    public void freeGameTest() {
         SteamGame freeGame = steamScraper.scrapeGame(freeGameDoc);
         assertNotNull(freeGame.getUrl());
         assertEquals("Path of Exile", freeGame.getTitle());
@@ -47,7 +44,7 @@ public class SteamScraperTest {
     }
 
     @Test
-    public void testPaidGame() {
+    public void paidGameTest() {
         SteamGame paidGame = steamScraper.scrapeGame(paidGameDoc);
         assertNotNull(paidGame.getUrl());
         assertEquals("Tom Clancy's Rainbow Six® Siege", paidGame.getTitle());
@@ -59,7 +56,7 @@ public class SteamScraperTest {
     }
 
     @Test
-    public void testDiscountGame() {
+    public void discountGameTest() {
         SteamGame discountGame = steamScraper.scrapeGame(discountGameDoc);
         assertNotNull(discountGame.getUrl());
         assertEquals("Borderlands 2", discountGame.getTitle());
