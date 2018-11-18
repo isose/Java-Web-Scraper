@@ -2,7 +2,7 @@
     -fx-background-color: #383838;
 }
 
-#scrapeBtn {
+#refreshBtn {
     -fx-background-color: #86C1B9;
     -fx-text-fill: #FFFFFF;
     -fx-background-radius: 6;

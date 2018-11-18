@@ -18,7 +18,7 @@
          <VBox.margin>
             <Insets bottom="10.0" top="20.0" />
          </VBox.margin></Text>
-      <Button fx:id="scrapeBtn" mnemonicParsing="false" onAction="#scrape" prefHeight="40.0" prefWidth="200.0" text="Scrape" textAlignment="CENTER">
+      <Button fx:id="refreshBtn" mnemonicParsing="false" onAction="#refresh" prefHeight="40.0" prefWidth="200.0" text="Refresh" textAlignment="CENTER">
          <VBox.margin>
             <Insets />
          </VBox.margin></Button>

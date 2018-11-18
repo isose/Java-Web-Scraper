@@ -30,12 +30,8 @@ public class ScraperController implements Initializable {
     @FXML
     public ComboBox<String> sortComboBox;
 
-    public void scrape(ActionEvent event) throws Exception {
-        // TODO singleton pattern for SteamScraper
-        steamGameScraper = new SteamScraper(redditGameScraper.scrapeSteamUrls());
-        steamGameScraper.scrapeGames();
-        steamGames = steamGameScraper.getSteamGames();
-        displayItems();
+    public void refresh(ActionEvent event) {
+        scrape();
     }
 
     public void onComboChanged(ActionEvent event) {
@@ -63,6 +59,14 @@ public class ScraperController implements Initializable {
         displayItems();
     }
 
+    private void scrape() {
+        // TODO singleton pattern for SteamScraper
+        steamGameScraper = new SteamScraper(redditGameScraper.scrapeSteamUrls());
+        steamGameScraper.scrapeGames();
+        steamGames = steamGameScraper.getSteamGames();
+        displayItems();
+    }
+
     private void displayItems() {
         gameListViewController.setListView(steamGames.getSteamGames());
     }
@@ -71,6 +75,7 @@ public class ScraperController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         // TODO singleton pattern for RedditScraper
         redditGameScraper = new RedditScraper();
+        scrape();
         sortComboBox.setItems(FXCollections.observableArrayList(SORTING_COMBOBOX_OPTION_ALPHABETICAL_ASCENDING,
                                                                 SORTING_COMBOBOX_OPTION_ALPHABETICAL_DESCENDING,
                                                                 SORTING_COMBOBOX_OPTION_PRICE_ASCENDING,
