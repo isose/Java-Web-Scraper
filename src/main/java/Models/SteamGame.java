@@ -2,9 +2,6 @@ package Models;
 
 import javafx.scene.image.Image;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 public class SteamGame extends GameObject{
     private String description;
     private String rating;
@@ -51,5 +48,23 @@ public class SteamGame extends GameObject{
 
     public Image getImage() {
         return image;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null) {
+            return false;
+        }
+
+        if (this == o) {
+            return true;
+        }
+
+        return (o instanceof SteamGame) && ((SteamGame) o).getUrl().equals(this.getUrl());
+    }
+
+    @Override
+    public int hashCode() {
+        return this.getUrl().hashCode();
     }
 }

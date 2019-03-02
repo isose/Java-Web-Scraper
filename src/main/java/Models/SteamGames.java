@@ -18,7 +18,7 @@ public class SteamGames {
         steamGames.add(steamGame);
     }
 
-    public ArrayList<SteamGame> getSteamGames() {
+    public ArrayList<SteamGame> getSteamGameList() {
         return steamGames;
     }
 

@@ -4,24 +4,25 @@ import Models.SteamGame;
 import Scrapers.SteamScraper;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashSet;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class SteamScraperTest {
+    private static Document freeGameDoc;
+    private static Document paidGameDoc;
+    private static Document discountGameDoc;
+
     private SteamScraper steamScraper;
-    private Document freeGameDoc, paidGameDoc, discountGameDoc;
 
-
-    @BeforeEach
-    public void setUp() {
-        steamScraper = new SteamScraper(new HashSet<>());
+    @BeforeAll
+    public static void setUpDocument() {
         try {
             freeGameDoc = Jsoup.parse(new File("./src/main/java/test/testResources/Path of Exile on Steam.html"), null);
             paidGameDoc = Jsoup.parse(new File("./src/main/java/test/testResources/Tom Clancy's Rainbow Six® Siege on Steam.html"), null);
@@ -29,6 +30,11 @@ public class SteamScraperTest {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @BeforeEach
+    public void setUp() {
+        steamScraper = SteamScraper.getSteamScraper();
     }
 
     @Test

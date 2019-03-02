@@ -28,7 +28,6 @@ public class GameObject {
         return price;
     }
 
-
     public String getDiscount() {
         return discount;
     }

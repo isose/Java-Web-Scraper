@@ -2,6 +2,7 @@ package test;
 
 import Models.SteamGame;
 import Models.SteamGames;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -10,14 +11,14 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class SteamGamesTest {
-    private SteamGames steamGames;
-    private SteamGame cheapGame;
-    private SteamGame middleGame;
-    private SteamGame expensiveGame;
+    private static SteamGame cheapGame;
+    private static SteamGame middleGame;
+    private static SteamGame expensiveGame;
 
-    @BeforeEach
-    public void setUp() {
-        steamGames = new SteamGames();
+    private SteamGames steamGames;
+
+    @BeforeAll
+    public static void setUpSteamGame() {
         cheapGame = new SteamGame("placeholder.com",
                 "Cheapest Game",
                 "This game is cheap",
@@ -41,6 +42,11 @@ public class SteamGamesTest {
                 "CDN$ 100.99",
                 "-80%",
                 "testImage3");
+    }
+
+    @BeforeEach
+    public void setUpSteamGames() {
+        steamGames = new SteamGames();
         steamGames.addGame(cheapGame);
         steamGames.addGame(middleGame);
         steamGames.addGame(expensiveGame);
@@ -48,7 +54,7 @@ public class SteamGamesTest {
 
     @Test
     public void beforeSortingTest() {
-        ArrayList<SteamGame> gameList = steamGames.getSteamGames();
+        ArrayList<SteamGame> gameList = steamGames.getSteamGameList();
         assertEquals(cheapGame, gameList.get(0));
         assertEquals(middleGame, gameList.get(1));
         assertEquals(expensiveGame, gameList.get(2));
@@ -58,7 +64,7 @@ public class SteamGamesTest {
     public void sortTitleAscendingTest() {
         //Alphabetical A-Z sorting
         steamGames.sortTitleAscending();
-        ArrayList<SteamGame> gameList = steamGames.getSteamGames();
+        ArrayList<SteamGame> gameList = steamGames.getSteamGameList();
         assertEquals("Cheapest Game", gameList.get(0).getTitle());
         assertEquals("Expensive Game", gameList.get(1).getTitle());
         assertEquals("Middle Game",gameList.get(2).getTitle());
@@ -68,7 +74,7 @@ public class SteamGamesTest {
     public void sortTitleDescendingTest() {
         //Alphabetical Z-A sorting
         steamGames.sortTitleDescending();
-        ArrayList<SteamGame> gameList = steamGames.getSteamGames();
+        ArrayList<SteamGame> gameList = steamGames.getSteamGameList();
         assertEquals("Middle Game", gameList.get(0).getTitle());
         assertEquals("Expensive Game", gameList.get(1).getTitle());
         assertEquals("Cheapest Game", gameList.get(2).getTitle());
@@ -77,7 +83,7 @@ public class SteamGamesTest {
     @Test
     public void sortPriceAscendingTest() {
         steamGames.sortPriceAscending();
-        ArrayList<SteamGame> gameList = steamGames.getSteamGames();
+        ArrayList<SteamGame> gameList = steamGames.getSteamGameList();
         assertEquals("CDN$ 0.99", gameList.get(0).getPriceString());
         assertEquals("CDN$ 1.99", gameList.get(1).getPriceString());
         assertEquals("CDN$ 100.99", gameList.get(2).getPriceString());
@@ -86,7 +92,7 @@ public class SteamGamesTest {
     @Test
     public void sortPriceDescendingTest() {
         steamGames.sortPriceDescending();
-        ArrayList<SteamGame> gameList = steamGames.getSteamGames();
+        ArrayList<SteamGame> gameList = steamGames.getSteamGameList();
         assertEquals("CDN$ 100.99", gameList.get(0).getPriceString());
         assertEquals("CDN$ 1.99", gameList.get(1).getPriceString());
         assertEquals("CDN$ 0.99", gameList.get(2).getPriceString());
@@ -95,7 +101,7 @@ public class SteamGamesTest {
     @Test
     public void sortDiscountAscendingTest() {
         steamGames.sortDiscountAscending();
-        ArrayList<SteamGame> gameList = steamGames.getSteamGames();
+        ArrayList<SteamGame> gameList = steamGames.getSteamGameList();
         assertEquals("-75%", gameList.get(0).getDiscountString());
         assertEquals("-80%", gameList.get(1).getDiscountString());
         assertEquals("-90%", gameList.get(2).getDiscountString());
@@ -104,7 +110,7 @@ public class SteamGamesTest {
     @Test
     public void sortDiscountDescendingTest() {
         steamGames.sortDiscountDescending();
-        ArrayList<SteamGame> gameList = steamGames.getSteamGames();
+        ArrayList<SteamGame> gameList = steamGames.getSteamGameList();
         assertEquals("-90%", gameList.get(0).getDiscountString());
         assertEquals("-80%", gameList.get(1).getDiscountString());
         assertEquals("-75%", gameList.get(2).getDiscountString());

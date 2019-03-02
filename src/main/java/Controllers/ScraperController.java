@@ -1,6 +1,5 @@
 package Controllers;
 
-import Models.SteamGames;
 import Scrapers.RedditScraper;
 import Scrapers.SteamScraper;
 import javafx.collections.FXCollections;
@@ -22,7 +21,6 @@ public class ScraperController implements Initializable {
 
     private static RedditScraper redditGameScraper;
     private static SteamScraper steamGameScraper;
-    private SteamGames steamGames;
 
     @FXML
     private GameListViewController gameListViewController;
@@ -38,43 +36,40 @@ public class ScraperController implements Initializable {
         String option = sortComboBox.getValue();
         switch (option) {
             case SORTING_COMBOBOX_OPTION_ALPHABETICAL_ASCENDING:
-                steamGames.sortTitleAscending();
+                steamGameScraper.getSteamGames().sortTitleAscending();
                 break;
             case SORTING_COMBOBOX_OPTION_ALPHABETICAL_DESCENDING:
-                steamGames.sortTitleDescending();
+                steamGameScraper.getSteamGames().sortTitleDescending();
                 break;
             case SORTING_COMBOBOX_OPTION_PRICE_ASCENDING:
-                steamGames.sortPriceAscending();
+                steamGameScraper.getSteamGames().sortPriceAscending();
                 break;
             case SORTING_COMBOBOX_OPTION_PRICE_DESCENDING:
-                steamGames.sortPriceDescending();
+                steamGameScraper.getSteamGames().sortPriceDescending();
                 break;
             case SORTING_COMBOBOX_OPTION_DISCOUNT_ASCENDING:
-                steamGames.sortDiscountAscending();
+                steamGameScraper.getSteamGames().sortDiscountAscending();
                 break;
             case SORTING_COMBOBOX_OPTION_DISCOUNT_DESCENDING:
-                steamGames.sortDiscountDescending();
+                steamGameScraper.getSteamGames().sortDiscountDescending();
                 break;
         }
         displayItems();
     }
 
     private void scrape() {
-        // TODO singleton pattern for SteamScraper
-        steamGameScraper = new SteamScraper(redditGameScraper.scrapeSteamUrls());
-        steamGameScraper.scrapeGames();
-        steamGames = steamGameScraper.getSteamGames();
+        steamGameScraper.scrapeGames(redditGameScraper.scrapeSteamUrls());
         displayItems();
     }
 
     private void displayItems() {
-        gameListViewController.setListView(steamGames.getSteamGames());
+        gameListViewController.setListView(steamGameScraper.getSteamGames().getSteamGameList());
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // TODO singleton pattern for RedditScraper
-        redditGameScraper = new RedditScraper();
+        redditGameScraper = RedditScraper.getRedditScraper();
+        steamGameScraper = SteamScraper.getSteamScraper();
         scrape();
         sortComboBox.setItems(FXCollections.observableArrayList(SORTING_COMBOBOX_OPTION_ALPHABETICAL_ASCENDING,
                                                                 SORTING_COMBOBOX_OPTION_ALPHABETICAL_DESCENDING,
