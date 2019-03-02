@@ -2,40 +2,22 @@ package Models;
 
 import javafx.scene.image.Image;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-public class SteamGame {
-    private String url;
-    private String title;
+public class SteamGame extends GameObject{
     private String description;
     private String rating;
-    private String price;
-    private String discount;
     private String imageUrl;
     private Image image;
 
     public SteamGame(String url, String title, String description, String rating, String price, String discount, String imageUrl) {
-        this.url = url;
-        this.title = title;
+        super(url, title, price, discount);
         this.description = description;
         this.rating = rating;
-        this.price = price;
-        this.discount = discount;
         this.imageUrl = imageUrl;
         try {
             this.image = new Image(imageUrl);
         } catch (Exception e) {
             this.image = null;
         }
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public String getTitle() {
-        return title;
     }
 
     public String getDescription() {
@@ -46,39 +28,43 @@ public class SteamGame {
         return rating;
     }
 
-    public String getPriceString() {
-        return price;
-    }
-
-    public float getPriceFloat() {
-        //Regular expression to extract float from string
-        Pattern pattern = Pattern.compile("[0-9]+\\.[0-9]+");
-        Matcher matcher = pattern.matcher(price);
-        if (matcher.find()) {
-            return Float.parseFloat(matcher.group());
-        }
-        return 0;
-    }
-
-    public String getDiscountString() {
-        return discount;
-    }
-
-    public int getDiscountInt() {
-        //Regular expression to extract numbers from string
-        Pattern pattern = Pattern.compile("[0-9]+");
-        Matcher matcher = pattern.matcher(discount);
-        if (matcher.find()) {
-            return Integer.parseInt(matcher.group());
-        }
-        return 0;
-    }
-
     public String getImageUrl() {
         return imageUrl;
     }
 
+    @Override
+    public float getPriceFloat() {
+        return super.getPriceFloat();
+    }
+
+    @Override
+    public int getDiscountInt() {
+        return super.getDiscountInt();
+    }
+
+    public String getPriceString() { return super.getPrice(); }
+
+    public String getDiscountString() {return super.getDiscount();}
+
     public Image getImage() {
         return image;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null) {
+            return false;
+        }
+
+        if (this == o) {
+            return true;
+        }
+
+        return (o instanceof SteamGame) && ((SteamGame) o).getUrl().equals(this.getUrl());
+    }
+
+    @Override
+    public int hashCode() {
+        return this.getUrl().hashCode();
     }
 }

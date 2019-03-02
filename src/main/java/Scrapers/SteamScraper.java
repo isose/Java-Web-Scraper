@@ -7,23 +7,38 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
 public class SteamScraper {
-    private static final Map<String, String> steamCookies = Map.of("birthtime", "915177601", "mature_content", "1");
-    private HashSet<String> listOfSteamUrls;
+    private static SteamScraper steamScraper = new SteamScraper();
+    private static Map<String, String> steamCookies;
+    static {
+        Map<String, String> steamCookies = new HashMap<>();
+        steamCookies.put("birthtime", "915177601");
+        steamCookies.put("mature_content", "1");
+        SteamScraper.steamCookies = Collections.unmodifiableMap(steamCookies);
+    }
+
     private SteamGames steamGames;
 
-    public SteamScraper(HashSet<String> listOfSteamUrls) {
-        this.listOfSteamUrls = listOfSteamUrls;
+    private SteamScraper() {
         steamGames = new SteamGames();
     }
 
-    public void scrapeGames() {
+    public static SteamScraper getSteamScraper() {
+        return steamScraper;
+    }
+
+    public void scrapeGames(HashSet<String> listOfSteamUrls) {
         listOfSteamUrls.parallelStream().forEach((steamUrl) -> {
             try {
-                steamGames.addGame(scrapeGame(getSteamDocument(steamUrl)));
+                SteamGame steamGame = scrapeGame(getSteamDocument(steamUrl));
+                if (!steamGames.getSteamGameList().contains(steamGame)) {
+                    steamGames.addGame(steamGame);
+                }
             } catch (IOException e) {
                 System.out.print("Jsoup could not connect to steamUrl");
             }

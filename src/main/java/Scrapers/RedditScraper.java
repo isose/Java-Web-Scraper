@@ -16,10 +16,15 @@ public class RedditScraper {
     private static final String STEAM_URL_PATTERN = "https://store.steampowered.com/app/\\d+";
     private static final String[] DEFAULT_SUBREDDIT_URLS = new String[] { "https://www.reddit.com/r/gamedeals/", "https://www.reddit.com/r/steamdeals/" };
 
+    private static RedditScraper redditScraper = new RedditScraper();
     private Set<String> subRedditUrls;
 
-    public RedditScraper() {
+    private RedditScraper() {
         subRedditUrls = new HashSet<>(Arrays.asList(DEFAULT_SUBREDDIT_URLS));
+    }
+
+    public static RedditScraper getRedditScraper() {
+        return redditScraper;
     }
 
     public HashSet<String> scrapeSteamUrls() {
