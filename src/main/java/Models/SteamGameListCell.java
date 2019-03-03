@@ -1,11 +1,13 @@
 package Models;
 
+import com.sun.javafx.scene.control.skin.ScrollBarSkin;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
 
 import java.awt.*;
 import java.io.IOException;
@@ -20,6 +22,8 @@ public class SteamGameListCell extends ListCell<SteamGame> {
     @FXML private Label gamePrice;
     @FXML private Label gameDiscount;
     @FXML private ImageView gameImage;
+    @FXML private VBox steamGameImageVBox;
+    @FXML private VBox steamGameInfoVBox;
 
     public SteamGameListCell() {
         try {
@@ -40,6 +44,7 @@ public class SteamGameListCell extends ListCell<SteamGame> {
             setContentDisplay(ContentDisplay.TEXT_ONLY);
         } else {
             setGameInfo(item);
+            steamGameInfoVBox.prefWidthProperty().bind(getListView().widthProperty().subtract(steamGameImageVBox.getMaxWidth() + ScrollBarSkin.DEFAULT_WIDTH + 15));
             setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
         }
     }

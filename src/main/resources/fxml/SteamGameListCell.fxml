@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListCell?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
@@ -12,45 +13,41 @@
    <graphic>
       <HBox onMouseClicked="#openUrl">
          <children>
-            <VBox alignment="TOP_CENTER" maxWidth="300.0">
+            <VBox fx:id="steamGameImageVBox" alignment="TOP_CENTER" maxWidth="300.0">
                <children>
-                  <ImageView fx:id="gameImage" fitHeight="140.0" fitWidth="300.0" pickOnBounds="true"
-                             preserveRatio="true"/>
-                  <Label fx:id="gameRating" alignment="TOP_LEFT" text="Rating" wrapText="true" VBox.vgrow="ALWAYS"/>
+                  <ImageView fx:id="gameImage" fitHeight="140.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" />
+                  <Label fx:id="gameRating" alignment="TOP_LEFT" text="Rating" wrapText="true" VBox.vgrow="ALWAYS" />
                </children>
             </VBox>
-            <Region maxWidth="10.0" minWidth="10.0" prefHeight="200.0"/>
-            <VBox maxWidth="650.0" HBox.hgrow="ALWAYS">
+            <Region maxWidth="5.0" minWidth="5.0" prefHeight="200.0" />
+            <VBox fx:id="steamGameInfoVBox" HBox.hgrow="ALWAYS">
                <children>
                   <Label fx:id="gameTitle" alignment="TOP_LEFT" text="Title" wrapText="true" VBox.vgrow="ALWAYS">
                      <font>
-                        <Font size="24.0"/>
+                        <Font size="24.0" />
                      </font>
                   </Label>
-                  <Label fx:id="gameDescription" alignment="TOP_LEFT" maxWidth="650.0" text="Description"
-                         wrapText="true"
-                         VBox.vgrow="ALWAYS">
+                  <Label fx:id="gameDescription" alignment="TOP_LEFT" text="Description" wrapText="true" VBox.vgrow="ALWAYS">
                      <font>
-                        <Font size="14.0"/>
+                        <Font size="18.0" />
                      </font>
                   </Label>
                   <HBox alignment="BOTTOM_RIGHT" VBox.vgrow="ALWAYS">
                      <children>
-                        <Label fx:id="gameDiscount" alignment="CENTER" minWidth="50.0" text="Discount"
-                               HBox.hgrow="ALWAYS">
+                        <Label fx:id="gameDiscount" alignment="CENTER" minWidth="50.0" text="Discount" HBox.hgrow="ALWAYS">
                            <HBox.margin>
-                              <Insets/>
+                              <Insets />
                            </HBox.margin>
                            <font>
-                              <Font size="14.0"/>
+                              <Font size="14.0" />
                            </font>
                         </Label>
                         <Label fx:id="gamePrice" alignment="CENTER" minWidth="100.0" text="Price" HBox.hgrow="ALWAYS">
                            <HBox.margin>
-                              <Insets/>
+                              <Insets />
                            </HBox.margin>
                            <font>
-                              <Font size="14.0"/>
+                              <Font size="14.0" />
                            </font>
                         </Label>
                      </children>
@@ -61,4 +58,3 @@
       </HBox>
    </graphic>
 </fx:root>
-
