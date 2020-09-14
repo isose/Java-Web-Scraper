@@ -19,8 +19,8 @@ public class ScraperController implements Initializable {
     private static final String SORTING_COMBOBOX_OPTION_DISCOUNT_ASCENDING = "Discount (Lowest)";
     private static final String SORTING_COMBOBOX_OPTION_DISCOUNT_DESCENDING = "Discount (Highest)";
 
-    private static RedditScraper redditGameScraper;
-    private static SteamScraper steamGameScraper;
+    private static RedditScraper redditGameScraper = RedditScraper.getRedditScraper();
+    private static SteamScraper steamGameScraper = SteamScraper.getSteamScraper();
 
     @FXML
     private GameListViewController gameListViewController;
@@ -53,6 +53,8 @@ public class ScraperController implements Initializable {
             case SORTING_COMBOBOX_OPTION_DISCOUNT_DESCENDING:
                 steamGameScraper.getSteamGames().sortDiscountDescending();
                 break;
+            default:
+                break;
         }
         displayItems();
     }
@@ -68,14 +70,13 @@ public class ScraperController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        redditGameScraper = RedditScraper.getRedditScraper();
-        steamGameScraper = SteamScraper.getSteamScraper();
+        sortComboBox.setItems(FXCollections.observableArrayList(
+                SORTING_COMBOBOX_OPTION_ALPHABETICAL_ASCENDING,
+                SORTING_COMBOBOX_OPTION_ALPHABETICAL_DESCENDING,
+                SORTING_COMBOBOX_OPTION_PRICE_ASCENDING,
+                SORTING_COMBOBOX_OPTION_PRICE_DESCENDING,
+                SORTING_COMBOBOX_OPTION_DISCOUNT_ASCENDING,
+                SORTING_COMBOBOX_OPTION_DISCOUNT_DESCENDING));
         scrape();
-        sortComboBox.setItems(FXCollections.observableArrayList(SORTING_COMBOBOX_OPTION_ALPHABETICAL_ASCENDING,
-                                                                SORTING_COMBOBOX_OPTION_ALPHABETICAL_DESCENDING,
-                                                                SORTING_COMBOBOX_OPTION_PRICE_ASCENDING,
-                                                                SORTING_COMBOBOX_OPTION_PRICE_DESCENDING,
-                                                                SORTING_COMBOBOX_OPTION_DISCOUNT_ASCENDING,
-                                                                SORTING_COMBOBOX_OPTION_DISCOUNT_DESCENDING));
     }
 }

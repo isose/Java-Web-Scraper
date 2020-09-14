@@ -13,6 +13,6 @@ public class PriceComparator implements Comparator<SteamGame> {
         if (price1 == price2) {
             return 0;
         }
-        return (price1 < price2) ? -1 : 1;
+        return Float.compare(price1, price2);
     }
 }

@@ -3,10 +3,14 @@
 }
 
 #refreshBtn {
-    -fx-background-color: #86C1B9;
+    -fx-background-color: #75b8af;
     -fx-text-fill: #FFFFFF;
     -fx-background-radius: 6;
     -fx-font-size: 18;
+}
+
+#refreshBtn:hover {
+    -fx-background-color: #55a59a;
 }
 
 #gameListView {

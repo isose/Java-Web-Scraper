@@ -14,6 +14,7 @@ import java.util.Map;
 
 public class SteamScraper {
     private static SteamScraper steamScraper = new SteamScraper();
+    private static SteamGames steamGames = new SteamGames();
     private static Map<String, String> steamCookies;
     static {
         Map<String, String> steamCookies = new HashMap<>();
@@ -22,11 +23,7 @@ public class SteamScraper {
         SteamScraper.steamCookies = Collections.unmodifiableMap(steamCookies);
     }
 
-    private SteamGames steamGames;
-
-    private SteamScraper() {
-        steamGames = new SteamGames();
-    }
+    private SteamScraper() {}
 
     public static SteamScraper getSteamScraper() {
         return steamScraper;
