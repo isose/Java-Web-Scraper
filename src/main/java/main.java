@@ -6,7 +6,7 @@ import java.util.Objects;
 
 import javafx.application.Application;
 
-public class main extends Application{
+public class Main extends Application{
     private static final String PRIMARY_STAGE_TITLE = "Steam Game Scraper";
     private static final double PRIMARY_STAGE_WIDTH = 800;
     private static final double PRIMARY_STAGE_HEIGHT = 600;
