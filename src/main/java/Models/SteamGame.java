@@ -2,6 +2,10 @@ package Models;
 
 import javafx.scene.image.Image;
 
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
+
 public class SteamGame extends GameObject{
     private String description;
     private String rating;
@@ -14,7 +18,11 @@ public class SteamGame extends GameObject{
         this.rating = rating;
         this.imageUrl = imageUrl;
         try {
-            this.image = new Image(imageUrl);
+            // Open image url connection with User-Agent set to prevent 403 response from cloudflare urls
+            URLConnection connection = new URL(imageUrl).openConnection();
+            connection.setRequestProperty("User-Agent", System.getProperty("http.agent"));
+            InputStream stream = connection.getInputStream();
+            this.image = new Image(stream);
         } catch (Exception e) {
             this.image = null;
         }
