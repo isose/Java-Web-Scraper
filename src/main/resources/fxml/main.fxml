@@ -37,8 +37,6 @@
                    <fx:include fx:id="gameListView" source="SteamGameListView.fxml" VBox.vgrow="ALWAYS">
                         </fx:include>
                </content></Tab>
-            <Tab text="Humble Bundle" />
-            <Tab text="Humble Store" />
         </tabs>
       </TabPane>
    </children>
